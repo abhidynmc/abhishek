@@ -1,0 +1,62 @@
+1. To create a local repository:
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+2. To add repository :
+git remote add origin <link>
+
+3. To push
+git push
+
+4. To pull 
+git pull
+
+git pull origin master
+
+5. To check status
+git status
+
+6. To add into local repository
+git add <fileName>
+git add -A
+
+7. To commit changes in local repository
+git commit -m "This is the first commit"
+git commit -a -m "This is second commit"
+
+8. To view log
+git log
+
+9. To create branch in local repository
+git branch <branch name>
+
+10. To move from one branch to another
+git checkout <branch name>
+
+11. To merge the branches
+git merge <branch name>
+
+12. To rebase
+git rebase master
+
+13. To generate ssh key
+ssh-keygen
+
+then 
+cat /c/Users/Abhishek/.ssh/id_rsa.pub
+
+paste it in git hub accout -- Setting--> SSH--> New key
+then 
+ssh -T git@github.com
+
+$  ssh -T git@github.com
+Hi abhidynmc! You've successfully authenticated, but GitHub does not provide shell access.
+
+14. To push
+git push origin <branchname>
+
+15. To move back to lower commit
+git checkout <8 digit hashcode> file name
+
+
+
