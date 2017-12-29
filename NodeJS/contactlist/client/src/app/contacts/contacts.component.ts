@@ -17,6 +17,8 @@ export class ContactsComponent implements OnInit {
   first_name:string;
   last_name:string;
   phone:string;
+  _id:string;
+  updateById:boolean;
 
   constructor(private contactService: ContactService) { }
 
@@ -32,6 +34,9 @@ export class ContactsComponent implements OnInit {
         this.contactService.getContacts()
         .subscribe( contacts => 
         this.contacts= contacts);
+      this.first_name=null;
+      this.last_name=null;
+      this.phone=null;
       });
   }
 
@@ -55,19 +60,39 @@ export class ContactsComponent implements OnInit {
       last_name:this.last_name,
       phone:this.phone
     }
+    console.log("Updating contact for id :"+id);
     this.contactService.updateContact(id, newContact).subscribe(contact =>{
-      if(contact.n==1){
+      // if(contact.n==1){
         for(var i=0; i<contacts.length;i++){
           if(contacts[i]._id==id){
-            contacts[i].first_name=newContact.first_name;
-            contacts[i].last_name=newContact.last_name;
-            contacts[i].phone=newContact.phone;
+            contacts[i].first_name=contact.first_name;
+            contacts[i].last_name=contact.last_name;
+            contacts[i].phone=contact.phone;
+            console.log('here');
+            // contacts.splice(i,1);
+            // contacts.push(contact);
           }
-        }
+          console.log(contacts);
+        // }
       }
+      this.first_name=null;
+      this.last_name=null;
+      this.phone=null;
+      this.updateById=false;
+    });
+  }
+  searchContactById(id:any){
+    
+    this.contactService.searchContactById(id).subscribe(contact =>{
+      this._id=contact._id;
+      this.first_name=contact.first_name;
+      this.last_name=contact.last_name;
+      this.phone=contact.phone;
+      this.updateById=true;
     });
   }
   ngOnInit() {
+    
     this.contactService.getContacts()
       .subscribe( contacts => 
       this.contacts= contacts);

@@ -65,4 +65,15 @@ router.delete('/contact/:id', (req, res, next)=>{
     });
 });
 
+router.get('/contact/search/:id', (req, res, next)=>{
+    Contact.findById({_id: req.params.id}, function(err, contact){
+        if(err){
+            res.json({msg: 'Failed to get data for :'+req.params.id});
+        }
+        else{
+            res.json(contact);
+        }    
+    });
+});
+
 module.exports= router; 

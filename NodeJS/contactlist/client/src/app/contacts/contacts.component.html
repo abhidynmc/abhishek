@@ -14,40 +14,48 @@
        <input type = "text" [(ngModel)] = "phone" name = "phoneNo" class = "form-control" required>
     </div>
     <input type = "submit" class = "btn btn btn-success" value = "Add Contact">
+    <input type = "reset" class = "btn btn btn-success" value = "Reset"> &nbsp;
+    <br><br>
+    <div *ngIf ="updateById">
+    <input type = "button" class = "btn btn btn-success" value = "Update Contact" (click) ="updateContact(_id)">
+    </div>
   </form>
 </div> 
 
 <hr>
 
 <div class="container">
-    <h2 class="page-header"> View Contact</h2>
-  <table>
-    <tr>
-        <td class ="col-md-3">
+    <h2 class="page-header"> View Contacts</h2>
+  <table id="customers">
+    <tr class="table-success">
+        <td style="width:25%">
             First Name
           </td>
-          <td class ="col-md-3">
+          <td style="width:25%">
             Last Name  
           </td>
-           <td class ="col-md-3">
+           <td style="width:25%">
             Contact Number
            </td>
-          <td class ="col-md-3">
-            Action
+          <td style="width:25%">
+            Action : Edit | Delete
           </td>
     </tr>
-  <tr *ngFor = "let contact of contacts">
-      <td class ="col-md-3">
+  <tr *ngFor = "let contact of contacts" class="table-dark">
+      <td style="width:25%">
         {{contact.first_name}}
       </td>
-      <td class ="col-md-3">
+      <td style="width:25%">
         {{contact.last_name}}
       </td>
-       <td class ="col-md-3">
+       <td style="width:25%">
         {{contact.phone}}
        </td>
-      <td class ="col-md-3">
-        <input type="button" (click) = "deleteContact(contact._id)" value="Delete" class="btn btn-danger">
+      <td style="width:25%;">
+        <input type="button" (click) = "searchContactById(contact._id)" value="Edit" class="btn btn-danger"/>
+        &nbsp;&nbsp;
+        <input type="button" (click) = "deleteContact(contact._id)" value="Delete" class="btn btn-danger"/>
+        
       </td>
       </tr>
       </table>
