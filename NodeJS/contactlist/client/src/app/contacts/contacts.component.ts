@@ -91,6 +91,12 @@ export class ContactsComponent implements OnInit {
       this.updateById=true;
     });
   }
+  cancelUpdateContact(){
+    this.first_name=null;
+    this.last_name=null;
+    this.phone=null;
+    this.updateById=false;
+  }
   ngOnInit() {
     
     this.contactService.getContacts()

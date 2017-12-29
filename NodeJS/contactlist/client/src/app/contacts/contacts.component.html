@@ -14,10 +14,11 @@
        <input type = "text" [(ngModel)] = "phone" name = "phoneNo" class = "form-control" required>
     </div>
     <input type = "submit" class = "btn btn btn-success" value = "Add Contact">
-    <input type = "reset" class = "btn btn btn-success" value = "Reset"> &nbsp;
+    <input type = "reset" class = "btn btn btn-secondary" value = "Reset"> &nbsp;
     <br><br>
     <div *ngIf ="updateById">
     <input type = "button" class = "btn btn btn-success" value = "Update Contact" (click) ="updateContact(_id)">
+    <input type = "button" class = "btn btn btn-danger" value = "Cancel" (click) ="cancelUpdateContact()">
     </div>
   </form>
 </div> 
@@ -37,7 +38,7 @@
            <td style="width:25%">
             Contact Number
            </td>
-          <td style="width:25%">
+          <td style="width:14%"> 
             Action : Edit | Delete
           </td>
     </tr>
@@ -51,8 +52,8 @@
        <td style="width:25%">
         {{contact.phone}}
        </td>
-      <td style="width:25%;">
-        <input type="button" (click) = "searchContactById(contact._id)" value="Edit" class="btn btn-danger"/>
+      <td style="width:14%;">
+        <input type="button" (click) = "searchContactById(contact._id)" value="Edit" class="btn btn-info"/>
         &nbsp;&nbsp;
         <input type="button" (click) = "deleteContact(contact._id)" value="Delete" class="btn btn-danger"/>
         
