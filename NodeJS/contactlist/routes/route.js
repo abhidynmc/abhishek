@@ -64,7 +64,7 @@ router.delete('/contact/:id', (req, res, next)=>{
         }
     });
 });
-
+//searchcontactby ID
 router.get('/contact/search/:id', (req, res, next)=>{
     Contact.findById({_id: req.params.id}, function(err, contact){
         if(err){

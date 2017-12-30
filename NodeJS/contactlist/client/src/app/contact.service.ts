@@ -7,7 +7,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ContactService {
   host:string;
-  constructor(private http: Http) {this.host="192.168.43.190"; }
+  constructor(private http: Http) {
+    //this.host="192.168.43.190";
+    this.host="localhost";
+}
   //retrieving contacts
   getContacts(){
     return this.http.get('http://'+this.host+':3000/api/contacts').map(res=> res.json());

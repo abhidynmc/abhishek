@@ -19,6 +19,7 @@ export class ContactsComponent implements OnInit {
   phone:string;
   _id:string;
   updateById:boolean;
+  addNewContact:boolean;
 
   constructor(private contactService: ContactService) { }
 
@@ -89,6 +90,7 @@ export class ContactsComponent implements OnInit {
       this.last_name=contact.last_name;
       this.phone=contact.phone;
       this.updateById=true;
+      this.addNewContact=false;
     });
   }
   cancelUpdateContact(){
@@ -96,12 +98,14 @@ export class ContactsComponent implements OnInit {
     this.last_name=null;
     this.phone=null;
     this.updateById=false;
+    this.addNewContact=true;
   }
   ngOnInit() {
     
     this.contactService.getContacts()
       .subscribe( contacts => 
       this.contacts= contacts);
+      this.addNewContact=true;
   }
 
 }
