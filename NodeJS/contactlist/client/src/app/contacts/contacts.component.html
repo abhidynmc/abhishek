@@ -29,22 +29,22 @@
 
 <div class="container">
     <h2 class="page-header"> View Contacts</h2>
-  <table id="customers">
-    <tr class="table-success">
-        <td style="width:25%">
+  <table id="customers" style="width:100%">
+    <tr class="table-success customers">
+        <th style="width:25%">
             First Name
-          </td>
-          <td style="width:25%">
+          </th>
+          <th style="width:25%">
             Last Name  
-          </td>
-           <td style="width:25%">
-            Contact Number
-           </td>
-          <td style="width:14%"> 
+          </th>
+           <th style="width:25%">
+             Contact Number
+           </th>
+          <th style="width:14%"> 
             Action : Edit | Delete
-          </td>
+          </th>
     </tr>
-  <tr *ngFor = "let contact of contacts" class="table-dark">
+  <tr *ngFor = "let contact of contacts" class="table-dark customers">
       <td style="width:25%">
         {{contact.first_name}}
       </td>
@@ -54,7 +54,7 @@
        <td style="width:25%">
         {{contact.phone}}
        </td>
-      <td style="width:14%;">
+      <td style="width:14%">
         <input type="button" (click) = "searchContactById(contact._id)" value="Edit" class="btn btn-info"/>
         &nbsp;&nbsp;
         <input type="button" (click) = "deleteContact(contact._id)" value="Delete" class="btn btn-danger"/>

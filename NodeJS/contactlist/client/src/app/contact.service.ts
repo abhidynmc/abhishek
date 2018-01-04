@@ -8,8 +8,9 @@ import 'rxjs/add/operator/map';
 export class ContactService {
   host:string;
   constructor(private http: Http) {
-    //this.host="192.168.43.190";
-    this.host="localhost";
+    // this.host="192.168.43.190";
+    this.host="192.168.0.103";
+    //this.host="localhost";
 }
   //retrieving contacts
   getContacts(){

@@ -7,7 +7,7 @@ import {Contact} from '../contact';
   selector: 'app-contacts',
   providers: [ContactService],
   templateUrl:'./contacts.component.html',
-  styleUrls: ['./contacts.component.css']
+  styleUrls: ['../css/bootstrap.min.css']
   
 })
 
