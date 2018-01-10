@@ -80,6 +80,7 @@ export class ContactsComponent implements OnInit {
       this.last_name=null;
       this.phone=null;
       this.updateById=false;
+      this.addNewContact=true;
     });
   }
   searchContactById(id:any){
