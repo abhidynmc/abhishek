@@ -39,7 +39,7 @@ router.post('/contact/update/:id', (req, res, next)=>{
         last_name:req.body.last_name,
         phone:req.body.phone
     });
-
+    
 Contact.findByIdAndUpdate(id, newContact, {new :true}, function(err, result){
     if(err){
         res.json({msg: 'Failed to update contact'});
