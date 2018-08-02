@@ -1,0 +1,19 @@
+{
+  "name": "manageall",
+  "version": "1.0.0",
+  "description": "This tool can manage everything automatically.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "www.github.com/abhidynmc/abhishek/NodeJs"
+  },
+  "keywords": [
+    "automate",
+    "manage"
+  ],
+  "author": "Abhishek Saxena",
+  "license": "ISC"
+}
