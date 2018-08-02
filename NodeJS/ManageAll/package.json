@@ -15,5 +15,9 @@
     "manage"
   ],
   "author": "Abhishek Saxena",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "http": "0.0.0"
+  }
 }
