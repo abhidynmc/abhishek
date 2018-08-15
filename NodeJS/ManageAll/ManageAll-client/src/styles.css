@@ -2,13 +2,16 @@
 .navbar-light{
     background: #fff;
     border: 0;
-    font-family: Poppins;
+    font-family: Poppins, sans-serif;
 }
 .navbar-brand{
     font-size: 20px;
     color:#fff;
     font-weight: bold;
 
+}
+.navbar{
+    border: 0;
 }
 nav a {
     float: right !important;
@@ -18,3 +21,6 @@ nav a {
     border-radius: 10px;
     padding: 3px;
 }
+.topborder {
+    border: 5px solid #333;
+} 
