@@ -1,26 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {LoginPopupComponent} from './login-popup/login-popup.component';;
+import {LoginPopupComponent} from '../login-popup/login-popup.component';
+ 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.css']
 })
+export class LoginPageComponent implements OnInit {
 
-export class AppComponent{
-
-  title = 'ManageAll-client';
-
+  
   constructor(public dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.openDialog();
+  }
 
   openDialog() {
     console.log("In LoginPageComponent");
    // const dialogRef = this.dialog.open(LoginPopupComponent);
     // setTimeout(() => this.dialog.open(LoginPopupComponent));
 
-    setTimeout(() => this.dialog.open(LoginPopupComponent, { panelClass: 'custom-dialog-container' }).afterClosed().subscribe(result => {
+    setTimeout(() => this.dialog.open(LoginPopupComponent).afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     }));
   }
-  
 }
