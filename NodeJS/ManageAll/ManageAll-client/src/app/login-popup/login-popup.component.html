@@ -1,26 +1,31 @@
 <!-- <h2 mat-dialog-title>Login</h2> -->
-<div class="card text-white bg-info mb-0" style="max-width: 48rem;">
+<div class="card text-white bg-info mb-0" style="width: 21rem;">
   <div class="card-header" style="text-align: center">ManageAll Login</div>
   <div class="card-body">
     <h5 class="card-title">Go to Console</h5>
-    <form>
-      <div class="form-group">
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+      <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
         <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [formControl]="loginForm.controls['email']">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        <!-- <div class="alert alert-danger" *ngIf="!loginForm.controls['email'].valid">Please type correct email address.</div> -->
+        <div class="alert alert-danger" *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">Please type email address.</div>
+        <div class="alert alert-warning" *ngIf="loginForm.controls['email'].hasError('email') && loginForm.controls['email'].touched">Please type correct email address.</div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
         <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [formControl]="loginForm.controls['password']">
+        <!-- <div class="alert alert-danger" *ngIf="!loginForm.controls['password'].valid">Please type your password.</div> -->
+        <div class="alert alert-danger" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Please type your password.</div>
       </div>
       <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        <label class="form-check-label" for="exampleCheck1">Remember Me</label>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
-      <button mat-button [mat-dialog-close]="true" class="btn btn-default">Close</button>
+      <p class="card-text text-center"><button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>&nbsp;</p>
+      <!-- <button mat-button [mat-dialog-close]="true" class="btn btn-default">Close</button> -->
     </form>
-    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <p class="card-text text-center">Don't have an account?&nbsp;<button type="button"  (click)="openSignUp()" [mat-dialog-close]="true" class="btn btn-light btn-sm">SignUp</button></p>
   </div>
 </div>
 <!-- <mat-dialog-content>Are you sure?</mat-dialog-content> -->

@@ -14,7 +14,7 @@ export class AppComponent{
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    console.log("In LoginPageComponent");
+    console.log("In App Component");
    // const dialogRef = this.dialog.open(LoginPopupComponent);
     // setTimeout(() => this.dialog.open(LoginPopupComponent));
 

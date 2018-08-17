@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 // import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,6 +13,7 @@ import { AboutComponent } from './about/about.component';
 import { PageNotFoundComponent } from './other/pageNotFound.component';
 import { appRouting } from './app.routing';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
+import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
 //import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { LoginPopupComponent } from './login-popup/login-popup.component';
     HomeComponent,
     ContactComponent,
     PageNotFoundComponent,
-    LoginPopupComponent
+    LoginPopupComponent,
+    SignUpPopupComponent
   //  LoginPageComponent
   ],
   imports: [
@@ -31,12 +33,14 @@ import { LoginPopupComponent } from './login-popup/login-popup.component';
     HttpModule,
     appRouting, 
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule, 
+    ReactiveFormsModule
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
   entryComponents: [
     //LoginPageComponent, 
-    LoginPopupComponent
+    LoginPopupComponent,
+    SignUpPopupComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
