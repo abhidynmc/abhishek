@@ -4,7 +4,7 @@ import { SignUpPopupComponent } from '../sign-up-popup/sign-up-popup.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login-popup',
-  templateUrl: './login-popup.component.html',
+  templateUrl: './login-popup-material.component.html',
   styleUrls: ['./login-popup.component.css']
 })
 export class LoginPopupComponent implements OnInit {

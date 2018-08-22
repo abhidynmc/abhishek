@@ -2,19 +2,24 @@
   <div class="card-header" style="text-align: center">ManageAll SignUp</div>
   <div class="card-body">
     <!-- <h5 class="card-title">Please fill below details:</h5> -->
-    <form>
-      <div class="form-group">
+    <form [formGroup]="signUpForm" (ngSubmit)="submitSignUpForm(signUpForm.value)">
+      <div class="form-group" [ngClass]="{'has-error':!signUpForm.controls['name'].valid && signUpForm.controls['name'].touched}">
         <label for="Name">Name</label>
-        <input type="text" class="form-control" id="Name" aria-describedby="Name" placeholder="Enter name">
+        <input type="text" class="form-control" id="Name" aria-describedby="Name" placeholder="Enter name" [formControl]="signUpForm.controls['name']">
+        <div class="alert alert-danger" *ngIf="signUpForm.controls['name'].hasError('required') && signUpForm.controls['name'].touched">Please type yor name.</div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-error':!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched}">
         <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [formControl]="signUpForm.controls['email']">
+        <div class="alert alert-danger" *ngIf="signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched">Please type email address.</div>
+        <div class="alert alert-warning" *ngIf="signUpForm.controls['email'].hasError('email') && signUpForm.controls['email'].touched">Please type correct email address.</div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-error':!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched}">
         <label for="exampleInputPassword1">Choose Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [formControl]="signUpForm.controls['password']">
+        <div class="alert alert-danger" *ngIf="signUpForm.controls['password'].hasError('required') && signUpForm.controls['password'].touched">Please type password.</div>
+        <div class="alert alert-warning" *ngIf="signUpForm.controls['password'].hasError('passwordStrength') && signUpForm.controls['password'].touched">Password doesn't match with policy <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+          <span class="badge badge-pill badge-dark">?</span></button></div>
       </div>
       <!-- <div class="form-group">
           <label for="exampleInputConfirmPassword">Confirm Password</label>

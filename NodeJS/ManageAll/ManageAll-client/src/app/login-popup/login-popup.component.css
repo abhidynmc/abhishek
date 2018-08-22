@@ -10,3 +10,16 @@
     min-height: inherit;
     max-height: inherit;
 } */
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+  .forgetPassword{
+      float: right;
+      text-decoration: none;
+      color:rgba(0,0,0,.87);
+  }

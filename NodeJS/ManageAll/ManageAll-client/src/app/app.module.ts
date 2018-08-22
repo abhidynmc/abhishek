@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 // import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule} from "@angular/material";
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule  } from "@angular/material";
+
 
 import { AppComponent } from './app.component';   
 import { ContactComponent } from './contact/contact.component';
@@ -14,6 +15,7 @@ import { PageNotFoundComponent } from './other/pageNotFound.component';
 import { appRouting } from './app.routing';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
 import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
+import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-all-client-console.module';
 //import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
@@ -29,12 +31,17 @@ import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule, 
     HttpModule,
     appRouting, 
     BrowserAnimationsModule,
     MatDialogModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    MatIconModule, 
+    MatButtonModule,
+    ManageAllClientConsoleModule
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
   entryComponents: [

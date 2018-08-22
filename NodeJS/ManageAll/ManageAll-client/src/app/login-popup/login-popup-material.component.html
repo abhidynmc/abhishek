@@ -1,0 +1,33 @@
+<div class="card" style="width: 19rem;">
+    <!-- <div class="card-header" style="text-align: center">ManageAll Login</div> -->
+    <div class="card-body">
+      <h5 class="card-title">Go to Console&nbsp;<mat-icon>bar_chart</mat-icon></h5>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+        <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
+            <mat-form-field appearance="outline">
+                <mat-label>Login ID:</mat-label>
+                <input matInput type="email" placeholder="Please enter email id" [formControl]="loginForm.controls['email']">
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-hint>Enter email.</mat-hint>
+                <mat-error *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">Please type email address.</mat-error>
+                <mat-error *ngIf="loginForm.controls['email'].hasError('email') && loginForm.controls['email'].touched">Please type correct email address.</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
+            <mat-form-field appearance="outline">
+                <mat-label>Password:</mat-label>
+                <input matInput type="password" placeholder="Please enter your password" [formControl]="loginForm.controls['password']">
+                <mat-icon matSuffix>vpn_key</mat-icon>
+                <mat-hint>Enter password.</mat-hint>
+                <mat-error *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Please type your password.</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+          <a href="" class="forgetPassword">Forget password?</a>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>&nbsp; &nbsp; Or &nbsp; &nbsp;<button mat-raised-button  (click)="openSignUp()" [mat-dialog-close]="true">SignUp <mat-icon matSuffix>person_add</mat-icon></button>
+      </form>
+    </div>
+  </div>
