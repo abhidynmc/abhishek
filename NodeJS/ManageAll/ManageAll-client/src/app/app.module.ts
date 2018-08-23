@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 // import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule  } from "@angular/material";
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule  } from "@angular/material";
 
+import { DataService } from './app.service';
 
 import { AppComponent } from './app.component';   
 import { ContactComponent } from './contact/contact.component';
@@ -16,6 +18,7 @@ import { appRouting } from './app.routing';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
 import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
 import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-all-client-console.module';
+import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.component';
 //import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
@@ -26,13 +29,15 @@ import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-
     ContactComponent,
     PageNotFoundComponent,
     LoginPopupComponent,
-    SignUpPopupComponent
+    SignUpPopupComponent,
+    SignUpCompleteComponent
   //  LoginPageComponent
   ],
   imports: [
     BrowserModule,
     FormsModule, 
     HttpModule,
+    HttpClientModule,
     appRouting, 
     BrowserAnimationsModule,
     MatDialogModule, 
@@ -41,6 +46,7 @@ import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-
     MatInputModule,
     MatIconModule, 
     MatButtonModule,
+    MatTooltipModule,
     ManageAllClientConsoleModule
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
@@ -49,7 +55,7 @@ import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-
     LoginPopupComponent,
     SignUpPopupComponent
   ],
-  providers: [],
+  providers: [SignUpPopupComponent, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

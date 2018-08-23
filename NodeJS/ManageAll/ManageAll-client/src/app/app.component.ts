@@ -7,7 +7,7 @@ import {LoginPopupComponent} from './login-popup/login-popup.component';;
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent{
+export class AppComponent implements OnInit{
 
   title = 'ManageAll-client';
 
@@ -22,5 +22,7 @@ export class AppComponent{
       console.log(`Dialog result: ${result}`);
     }));
   }
-  
+  ngOnInit(){
+    setInterval(()=> this.dialog.closeAll());
+  }
 }
