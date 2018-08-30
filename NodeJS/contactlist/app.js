@@ -41,7 +41,7 @@ app.use('/api', route);
 app.get('/', (req, res)=>{
     res.send('foobar');
 });
-app.listen(port,()=>{
+app.listen(port, ()=>{
     console.log("server started at port:"+port);
 
 });
