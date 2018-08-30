@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-// import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule  } from "@angular/material";
 
@@ -19,7 +18,6 @@ import { LoginPopupComponent } from './login-popup/login-popup.component';
 import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
 import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-all-client-console.module';
 import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.component';
-//import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +29,6 @@ import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.com
     LoginPopupComponent,
     SignUpPopupComponent,
     SignUpCompleteComponent
-  //  LoginPageComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +48,6 @@ import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.com
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
   entryComponents: [
-    //LoginPageComponent, 
     LoginPopupComponent,
     SignUpPopupComponent
   ],

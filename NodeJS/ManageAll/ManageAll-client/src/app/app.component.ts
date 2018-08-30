@@ -15,14 +15,11 @@ export class AppComponent implements OnInit{
 
   openDialog() {
     console.log("In App Component");
-   // const dialogRef = this.dialog.open(LoginPopupComponent);
-    // setTimeout(() => this.dialog.open(LoginPopupComponent));
-
+ 
     setTimeout(() => this.dialog.open(LoginPopupComponent, { panelClass: 'custom-dialog-container' }).afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     }));
   }
   ngOnInit(){
-    setInterval(()=> this.dialog.closeAll());
   }
 }

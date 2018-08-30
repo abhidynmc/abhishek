@@ -42,9 +42,6 @@ export class SignUpPopupComponent implements OnInit {
       if (!control.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,100})/)) {
         return { 'passwordStrength': true };
       }
-      else{
-        //here i need to add check for special characters
-      }
     }
   }
   
@@ -53,6 +50,5 @@ export class SignUpPopupComponent implements OnInit {
     console.log(value);
     this.data.changeSignUpFormData(this.signUpForm.value) ;
     this.router.navigateByUrl('/app-sign-up-complete');
-    
   }
 }
