@@ -10,6 +10,7 @@ export class DataService{
     constructor() {}
 
     changeSignUpFormData(data : any){
+        JSON.stringify({data})
         this.signUpFormData.next(data);
     }
 }

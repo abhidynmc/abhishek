@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../app.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatStepper } from '@angular/material';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
@@ -13,16 +13,23 @@ export class SignUpCompleteComponent implements OnInit {
   signUpEmail:String;
   signUpPassword:String;
   signUpData:any;
-  signUpCompleteForm: FormGroup;
+  signUpPersonalForm: FormGroup;
+  signUpOrganizationForm: FormGroup;
   constructor(private data: DataService, public dialog: MatDialog, fb: FormBuilder) {
-    this.signUpCompleteForm=fb.group({
+    this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
+    this.signUpPersonalForm=fb.group({
       firstname: [null, Validators.required],
       lastname: [null, Validators.required],
       email:[this.signUpData.email, Validators.compose([Validators.required, Validators.email])],
-      passwords: fb.group({
-        password: [this.signUpData.password, Validators.compose([Validators.required, this.passwordValueValidator])],
-        confirm_password: [null, [Validators.required]],
-    }, {validator: this.passwordConfirming}),
+    //   passwords: fb.group({
+    //     password: [null, Validators.compose([Validators.required, this.passwordValueValidator])],
+    //     confirm_password: [null, [Validators.required]],
+    // }, {validator: this.passwordConfirming}),
+    password: [this.signUpData.password, Validators.compose([Validators.required, this.passwordValueValidator])],
+    confirm_password: [null, [Validators.required]]
+    }, {validator: this.passwordConfirming});
+
+    this.signUpOrganizationForm=fb.group({
       role:[null],
       organization:[null, Validators.required],
       aboutOrganization:[null, Validators.required],
@@ -35,8 +42,9 @@ export class SignUpCompleteComponent implements OnInit {
     });
    }
 
-   passwordConfirming(c: AbstractControl): { invalid: boolean } {
+   passwordConfirming(c: AbstractControl) : {invalid:boolean}{
     if (c.get('password').value !== c.get('confirm_password').value) {
+      c.get('confirm_password').setErrors({'noMatch': true});
         return {invalid: true};
     }
 }
@@ -47,11 +55,18 @@ export class SignUpCompleteComponent implements OnInit {
       }
     }
   }
-
+  SubmitSignUpOrganizationForm(value: any):void{
+    console.log('Reactive Form Data: ')
+    console.log(value);
+  }
+  SubmitSignUpPersonalForm(value: any):void{
+    console.log('Reactive Form Data: ')
+    console.log(value);
+  }
   ngOnInit() {
     setInterval(()=> this.dialog.closeAll());
-    this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
-    console.log("Sign Up Data from DataService :"+this.signUpData);
+    // this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
+    // console.log("Sign Up Data from DataService :"+this.signUpData.email);
   }
 
 }
