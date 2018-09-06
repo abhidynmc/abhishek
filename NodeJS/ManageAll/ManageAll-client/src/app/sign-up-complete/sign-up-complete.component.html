@@ -3,7 +3,8 @@
   {{signUpData.password}} -->
 <div class="container"><hr>
 <h6><mat-icon color="primary"> border_color</mat-icon>&nbsp;<u>Complete your sign up.</u></h6>
-<mat-vertical-stepper linear>
+<!-- <mat-vertical-stepper linear> -->
+  <mat-vertical-stepper>
     <mat-step [stepControl]="signUpPersonalForm">
       <form [formGroup]="signUpPersonalForm" (ngSubmit)="SubmitSignUpPersonalForm(signUpPersonalForm.value)">
         <ng-template matStepLabel>Fill out your personal details.</ng-template>
@@ -12,33 +13,44 @@
                 <mat-label>First Name:</mat-label>
                 <input matInput [formControl]="signUpPersonalForm.controls['firstname']">
                 <mat-icon matSuffix>person_outline</mat-icon>
-                <mat-error *ngIf="signUpPersonalForm.controls['firstname'].hasError('required') && signUpPersonalForm.controls['firstname'].touched">Please type yor first name.</mat-error>
-            </mat-form-field>&nbsp;
+                <mat-error *ngIf="signUpPersonalForm.controls['firstname'].hasError('required') && signUpPersonalForm.controls['firstname'].touched">Please type your first name.</mat-error>
+            </mat-form-field>
+            &nbsp;
             <mat-form-field>
                 <mat-label>Last Name:</mat-label>
                 <input matInput [formControl]="signUpPersonalForm.controls['lastname']">
                 <mat-icon matSuffix>person</mat-icon>
-                <mat-error *ngIf="signUpPersonalForm.controls['lastname'].hasError('required') && signUpPersonalForm.controls['lastname'].touched">Please type yor last name.</mat-error>
+                <mat-error *ngIf="signUpPersonalForm.controls['lastname'].hasError('required') && signUpPersonalForm.controls['lastname'].touched">Please type your last name.</mat-error>
             </mat-form-field>
         </div>
-        <div class="form-group" [ngClass]="{'has-error':!signUpPersonalForm.controls['email'].valid && signUpPersonalForm.controls['email'].touched}">
+        <div class="form-group" [ngClass]="{'has-error':(!signUpPersonalForm.controls['email'].valid && signUpPersonalForm.controls['email'].touched)|| (!signUpPersonalForm.controls['contactNo'].valid && signUpPersonalForm.controls['contactNo'].touched)}">
             <mat-form-field>
                 <mat-label>Email:</mat-label>
                 <input matInput [formControl]="signUpPersonalForm.controls['email']">
-                <mat-icon matSuffix>mail_outline</mat-icon>
-                <mat-error *ngIf="signUpPersonalForm.controls['email'].hasError('required') && signUpPersonalForm.controls['email'].touched">Please type yor email address.</mat-error>
+                <mat-icon matSuffix>mail</mat-icon>
+                <mat-error *ngIf="signUpPersonalForm.controls['email'].hasError('required') && signUpPersonalForm.controls['email'].touched">Please type your email address.</mat-error>
                 <mat-error *ngIf="signUpPersonalForm.controls['email'].hasError('email') && signUpPersonalForm.controls['email'].touched">Please type correct email address.</mat-error>
             </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>Contact No:</mat-label>
+              <input matInput [formControl]="signUpPersonalForm.controls['contactNo']">
+              <mat-icon matSuffix>call</mat-icon>
+              <mat-hint>Please mention your country code, e.g., +1.</mat-hint>
+              <mat-error *ngIf="signUpPersonalForm.controls['contactNo'].hasError('required') && signUpPersonalForm.controls['contactNo'].touched">Please type your contact number.</mat-error>
+              <mat-error *ngIf="signUpPersonalForm.controls['contactNo'].hasError('pattern') && signUpPersonalForm.controls['contactNo'].touched">Please enter valid number</mat-error>
+          </mat-form-field>
         </div>
         <div class="form-group" [ngClass]="{'has-error':!signUpPersonalForm.controls['password'].valid && signUpPersonalForm.controls['password'].touched}">
             <mat-form-field>
                 <mat-label>Password:</mat-label>
                 <input matInput [formControl]="signUpPersonalForm.controls['password']" [type]="hide ? 'text' : 'password'">
                 <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                <mat-error *ngIf="signUpPersonalForm.controls['password'].hasError('required') && signUpPersonalForm.controls['password'].touched">Please type yor password.</mat-error>
-                <mat-error *ngIf="signUpPersonalForm.controls['password'].hasError('passwordStrength') && signUpPersonalForm.controls['password'].touched">Password doesn't match with policy.<mat-icon  matTooltip="Password Policy:&#13;1.Password should be 6 character long.&#13;2.It must be a combination of lower and uppercare characters.&#13;3.It must contain a special character e.g., #,$,%.&#13;4.It must contain a number." [matTooltipClass]="'my-tooltip'">error</mat-icon></mat-error>
+                <mat-hint>Please follow password policy: <mat-icon  matTooltip="Password Policy:&#13;1.Password should be 6 character long.&#13;2.It must be a combination of lower and uppercare characters.&#13;3.It must contain a special character e.g., #,$,%.&#13;4.It must contain a number." [matTooltipClass]="'my-tooltip'">error</mat-icon></mat-hint>
+                <mat-error *ngIf="signUpPersonalForm.controls['password'].hasError('required') && signUpPersonalForm.controls['password'].touched">Please type your password.</mat-error>
+                <mat-error *ngIf="signUpPersonalForm.controls['password'].hasError('passwordStrength') && signUpPersonalForm.controls['password'].touched">Password policy voilated.<mat-icon  matTooltip="Password Policy:&#13;1.Password should be 6 character long.&#13;2.It must be a combination of lower and uppercare characters.&#13;3.It must contain a special character e.g., #,$,%.&#13;4.It must contain a number." [matTooltipClass]="'my-tooltip'">error</mat-icon></mat-error>
             </mat-form-field>
-        </div>
+        </div>    
         <div class="form-group" [ngClass]="{'has-error':!signUpPersonalForm.controls['confirm_password'].valid && signUpPersonalForm.controls['confirm_password'].touched}">
             <mat-form-field>
                 <mat-label>Confirm Password:</mat-label>
@@ -47,19 +59,121 @@
                 <mat-error *ngIf="signUpPersonalForm.controls['confirm_password'].hasError('required') && signUpPersonalForm.controls['confirm_password'].touched">Please type confirm password.</mat-error>
                 <mat-error *ngIf="signUpPersonalForm.controls['confirm_password'].hasError('noMatch') && signUpPersonalForm.controls['confirm_password'].touched">Password doesn't match.</mat-error>
             </mat-form-field>
-        </div>
+        </div>    
+        <br>
           <button mat-raised-button color="primary" type="submit" [disabled]="!signUpPersonalForm.valid" matStepperNext>Next</button>
       </form>
     </mat-step>
-    <mat-step [stepControl]="signUpOrganizationForm">
-      <form [formGroup]="signUpOrganizationForm">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        
-        <div>
+    <mat-step>
+      <br>  
+      <ng-template matStepLabel>Fill out your organization details</ng-template>
+        <label>Tell us your role:</label>&nbsp;&nbsp;
+        <mat-radio-group>
+            <mat-radio-button value="1" (click)="chooseRole('employee')">Employee</mat-radio-button>
+            &nbsp;
+            <mat-radio-button value="2" (click)="chooseRole('organization')">Organization</mat-radio-button>
+        </mat-radio-group>
+        <form *ngIf="employee" [formGroup]="signUpEmployeeForm" (ngSubmit)="SubmitSignUpEmployeeForm(signUpEmployeeForm.value)">
+          <mat-form-field>
+            <mat-select placeholder="Your Organization" [formControl]="signUpEmployeeForm.controls['organizationName']">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let org of organizationData" [value]="org">
+                {{org.name}}:{{org.location}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="signUpEmployeeForm.controls['organizationName']">Please choose an organization</mat-error>
+          </mat-form-field>
+          <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!signUpEmployeeForm.valid" matStepperNext>Next</button>
+          </div>
+        </form>
+        <form *ngIf="organization" [formGroup]="signUpOrganizationForm" (ngSubmit)="SubmitSignUpOrganizationForm(signUpOrganizationForm.value)">
+          <label>Add your Organization.</label>
+          <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['organizationName'].valid && signUpOrganizationForm.controls['organizationName'].touched}">
+              <mat-form-field>
+                  <mat-label>Organization Name:</mat-label>
+                  <input matInput [formControl]="signUpOrganizationForm.controls['organizationName']">
+                  <mat-icon matSuffix>business_center</mat-icon>
+                  <mat-hint *ngIf="!signUpOrganizationForm.controls['organizationName'].hasError('isOrgUnique') && signUpOrganizationForm.controls['organizationName'].touched">Organization Available!</mat-hint>
+                  <mat-error *ngIf="signUpOrganizationForm.controls['organizationName'].hasError('required') && signUpOrganizationForm.controls['organizationName'].touched">Please type your organization name.</mat-error>
+                  <mat-error *ngIf="signUpOrganizationForm.controls['organizationName'].hasError('isOrgUnique') && signUpOrganizationForm.controls['organizationName'].touched">This organization is already registered with us.</mat-error>
+                  <mat-error *ngIf="signUpOrganizationForm.controls['organizationName'].hasError('error') && signUpOrganizationForm.controls['organizationName'].touched">There has been some error, please try again after sometimes.</mat-error>
+              </mat-form-field>
+          </div>
+          <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['aboutOrganization'].valid && signUpOrganizationForm.controls['aboutOrganization'].touched}">
+            <mat-form-field>
+                <mat-label>About Organization:</mat-label>
+                <textarea matInput [formControl]="signUpOrganizationForm.controls['aboutOrganization']"></textarea>
+                <mat-icon matSuffix>business_center</mat-icon>
+                <mat-error *ngIf="signUpOrganizationForm.controls['aboutOrganization'].hasError('required') && signUpOrganizationForm.controls['aboutOrganization'].touched">Please type about organization</mat-error>
+            </mat-form-field>
+        </div> 
+        <div class="form-group" [ngClass]="{'has-error':(!signUpOrganizationForm.controls['founder'].valid && signUpOrganizationForm.controls['founder'].touched) || (!signUpOrganizationForm.controls['foundedIn'].valid && signUpOrganizationForm.controls['foundedIn'].touched) || (!signUpOrganizationForm.controls['location'].valid && signUpOrganizationForm.controls['location'].touched)}">
+          <mat-form-field>
+              <mat-label>Founder:</mat-label>
+              <input matInput [formControl]="signUpOrganizationForm.controls['founder']">
+              <mat-icon matSuffix>business_center</mat-icon>
+              <mat-error *ngIf="signUpOrganizationForm.controls['founder'].hasError('required') && signUpOrganizationForm.controls['founder'].touched">Please type organization's founder name</mat-error>
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field>
+            <mat-label>Founded In:</mat-label>
+            <input matInput [formControl]="signUpOrganizationForm.controls['foundedIn']">
+            <mat-icon matSuffix>business_center</mat-icon>
+            <mat-hint>Please type only year, e.g., 1978.</mat-hint>
+            <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('required') && signUpOrganizationForm.controls['foundedIn'].touched">Please type year of foundation</mat-error>
+            <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('maxLength') && signUpOrganizationForm.controls['foundedIn'].touched">Please type valid year</mat-error>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field>
+          <mat-label>Location:</mat-label>
+          <input matInput [formControl]="signUpOrganizationForm.controls['location']">
+          <mat-icon matSuffix>business_center</mat-icon>
+          <mat-error *ngIf="signUpOrganizationForm.controls['location'].hasError('required') && signUpOrganizationForm.controls['location'].touched">Please type the location.</mat-error>
+      </mat-form-field>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error':(!signUpOrganizationForm.controls['domain'].valid && signUpOrganizationForm.controls['domain'].touched) || (!signUpOrganizationForm.controls['companySize'].valid && signUpOrganizationForm.controls['companySize'].touched)}">
+        <mat-form-field>
+            <mat-label>Company Size:</mat-label>
+            <input matInput [formControl]="signUpOrganizationForm.controls['companySize']">
+            <mat-icon matSuffix>business_center</mat-icon>
+            <mat-error *ngIf="signUpOrganizationForm.controls['companySize'].hasError('required') && signUpOrganizationForm.controls['companySize'].touched">Please type company size.</mat-error>
+        </mat-form-field>
+      &nbsp;
+      <mat-form-field>
+        <mat-select placeholder="Domain" [formControl]="signUpOrganizationForm.controls['domain']">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let dom of organizationDomains" [value]="dom">
+            {{dom.domainName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="signUpOrganizationForm.controls['domain'].hasError('required') && signUpOrganizationForm.controls['domain'].touched">Please choose a domain.</mat-error>
+    </mat-form-field>
+    </div> 
+    <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['yourRole'].valid && signUpOrganizationForm.controls['yourRole'].touched}">
+      <mat-form-field>
+        <mat-select placeholder="Your Role" [formControl]="signUpOrganizationForm.controls['yourRole']">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let role of organizationRoles" [value]="role">
+            {{role.roleName}}
+          </mat-option>
+          <mat-option (click)="clickOthers()" value="Others">Others</mat-option>
+        </mat-select>
+        <mat-error *ngIf="signUpOrganizationForm.controls['yourRole'].hasError('required') && signUpOrganizationForm.controls['yourRole'].touched">Please choose your role.</mat-error>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field *ngIf="OtherRole">
+        <mat-label>Other Role:</mat-label>
+        <input  matInput [formControl]="signUpOrganizationForm.controls['yourRole']" placeholder="Other Role">
+        <mat-icon matSuffix>business_center</mat-icon>
+        <mat-error *ngIf="signUpOrganizationForm.controls['yourRole'].hasError('required') && signUpOrganizationForm.controls['yourRole'].touched">Please choose your role.</mat-error>
+    </mat-form-field>
+  </div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!signUpOrganizationForm.valid" matStepperNext>Next</button>   
+        </form>
+      
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
@@ -70,62 +184,4 @@
       </div>
     </mat-step>
   </mat-vertical-stepper> 
-
-<!-- <form [formGroup]="signUpCompleteForm" (ngSubmit)="submitSignUpCompleteForm(signUpCompleteForm.value)">
-    <div class="form-group" [ngClass]="{'has-error':!signUpCompleteForm.controls['firstname'].valid && signUpCompleteForm.controls['firstname'].touched}">
-        <mat-form-field>
-            <mat-label>First Name:</mat-label>
-            <input matInput type="text" placeholder="Please enter your first name" [formControl]="signUpCompleteForm.controls['firstname']">
-            <mat-icon matSuffix>person</mat-icon>
-            <mat-error *ngIf="signUpCompleteForm.controls['firstname'].hasError('required') && signUpCompleteForm.controls['firstname'].touched">Please type yor first name.</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group" [ngClass]="{'has-error':!signUpCompleteForm.controls['lastname'].valid && signUpCompleteForm.controls['lastname'].touched}">
-        <mat-form-field>
-            <mat-label>Last Name:</mat-label>
-            <input matInput type="text" placeholder="Please enter your last name" [formControl]="signUpCompleteForm.controls['lastname']">
-            <mat-icon matSuffix>person</mat-icon>
-            <mat-error *ngIf="signUpCompleteForm.controls['lastname'].hasError('required') && signUpCompleteForm.controls['lastname'].touched">Please type yor last name.</mat-error>
-        </mat-form-field>
-    </div>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!signUpCompleteForm.valid">Complete SignUp&nbsp;<mat-icon matSuffix>account_circle</mat-icon></button>
-  </form> -->
-
 </div>
-
-<!-- 
-
-<mat-vertical-stepper [linear]="true" #stepper>
-    <mat-step [stepControl]="signUpPersonalForm">
-      <form [formGroup]="signUpPersonalForm">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="signUpOrganizationForm">
-      <form [formGroup]="signUpOrganizationForm">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Address" formControlName="secondCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-  </mat-vertical-stepper>
- -->

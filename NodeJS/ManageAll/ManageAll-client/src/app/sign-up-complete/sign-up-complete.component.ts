@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../app.service';
-import { MatDialog, MatStepper } from '@angular/material';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { IOrganizationData } from './organization-data';
+import { IOrganizationDomains } from './iorganization-domains';
+import { IOrganizationRole } from './iorganization-role';
+import { MatDialog } from '@angular/material';
+import { SignUpServices } from './sign-up-services.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-up-complete',
@@ -15,30 +19,50 @@ export class SignUpCompleteComponent implements OnInit {
   signUpData:any;
   signUpPersonalForm: FormGroup;
   signUpOrganizationForm: FormGroup;
-  constructor(private data: DataService, public dialog: MatDialog, fb: FormBuilder) {
+  signUpEmployeeForm: FormGroup;
+  employee:boolean;
+  OtherRole:boolean;
+  organization:boolean;
+  organizationRoles:Array<IOrganizationRole>;
+  organizationDomains:Array<IOrganizationDomains>;
+  
+  // organizationData:Array<IOrganizationData>=[
+  //     new OrganizationData(1,"TCS", 12,"IT Company", "Abhi", 1968, "Delhi", "IT", 34),
+  //     new OrganizationData(2,"Wipro", 14, "Another IT Company", "Poonam", 1978,"Gurgaon", "IT", 56)
+  // ];
+  organizationData:Array<IOrganizationData>;
+  constructor(private data: DataService, public dialog: MatDialog, fb: FormBuilder, public signUpServices: SignUpServices) {
+
     this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
+
+    this.organizationData=this.signUpServices.orgData();
+    this.organizationDomains=this.signUpServices.getOrgDomains();
+    this.organizationRoles=this.signUpServices.getOrgRoles();
+
+    this.OtherRole=false;
+
     this.signUpPersonalForm=fb.group({
       firstname: [null, Validators.required],
       lastname: [null, Validators.required],
       email:[this.signUpData.email, Validators.compose([Validators.required, Validators.email])],
-    //   passwords: fb.group({
-    //     password: [null, Validators.compose([Validators.required, this.passwordValueValidator])],
-    //     confirm_password: [null, [Validators.required]],
-    // }, {validator: this.passwordConfirming}),
-    password: [this.signUpData.password, Validators.compose([Validators.required, this.passwordValueValidator])],
-    confirm_password: [null, [Validators.required]]
+      contactNo:[null, Validators.compose([Validators.required,  Validators.pattern(/^-?(0|[1-9]\d*)?$/)])],
+      password: [this.signUpData.password, Validators.compose([Validators.required, this.passwordValueValidator])],
+      confirm_password: [null, [Validators.required]]
     }, {validator: this.passwordConfirming});
 
     this.signUpOrganizationForm=fb.group({
-      role:[null],
-      organization:[null, Validators.required],
+      organizationName:[null, Validators.required,this.isOrganizationUnique.bind(this)],
       aboutOrganization:[null, Validators.required],
       founder:[null, Validators.required],
-      foundedIn:[null, Validators.required],
+      foundedIn:[null, Validators.compose([Validators.required, Validators.maxLength(4)])],
       location:[null, Validators.required],
       domain:[null, Validators.required],
       yourRole:[null, Validators.required],
       companySize: [null, Validators.required]
+    });
+
+    this.signUpEmployeeForm=fb.group({
+      organizationName:[null, Validators.required]
     });
    }
 
@@ -47,7 +71,7 @@ export class SignUpCompleteComponent implements OnInit {
       c.get('confirm_password').setErrors({'noMatch': true});
         return {invalid: true};
     }
-}
+  }
   passwordValueValidator(control) {
     if (control.value != undefined) {
       if (!control.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,100})/)) {
@@ -55,13 +79,49 @@ export class SignUpCompleteComponent implements OnInit {
       }
     }
   }
+  isOrganizationUnique(control: FormControl) {
+    console.log("Checking for organization name");
+    const q = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.signUpServices.isOrgRegisterd(control.value).subscribe((resp) => {
+          console.log("Response :"+resp);
+          if(resp==null){
+            // console.log("Response Inside:"+resp);
+            resolve(resp);
+          }else{
+            resolve({'isOrgUnique': true}); 
+          }
+        }, (err) => {
+          resolve({'error': true});
+        });
+          
+      }, 1000);
+    });
+    return q;
+  }
   SubmitSignUpOrganizationForm(value: any):void{
+    console.log('Reactive Form Data: ')
+    console.log(value);
+  }
+  SubmitSignUpEmployeeForm(value: any):void{
     console.log('Reactive Form Data: ')
     console.log(value);
   }
   SubmitSignUpPersonalForm(value: any):void{
     console.log('Reactive Form Data: ')
     console.log(value);
+  }
+  chooseRole(data: String){
+    if(data=='employee'){
+      this.employee=true;
+      this.organization=false;
+    }else if(data=='organization'){
+      this.employee=false;
+      this.organization=true;
+    }
+  }
+  clickOthers(){
+    this.OtherRole=!this.OtherRole;
   }
   ngOnInit() {
     setInterval(()=> this.dialog.closeAll());

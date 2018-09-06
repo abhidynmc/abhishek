@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule  } from "@angular/material";
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule, MatRadioModule, MatRadioButton
+,MatSelectModule  } from "@angular/material";
 
 import { DataService } from './app.service';
 
@@ -45,6 +46,8 @@ import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.com
     MatButtonModule,
     MatTooltipModule,
     MatStepperModule,
+    MatRadioModule,
+    MatSelectModule,
     ManageAllClientConsoleModule
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
