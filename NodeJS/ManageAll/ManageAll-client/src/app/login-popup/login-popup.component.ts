@@ -22,8 +22,9 @@ export class LoginPopupComponent implements OnInit {
     console.log('Reactive Form Data: ')
     console.log(value);
   }
-
+  
   ngOnInit() {
+    console.log("In login Popup.")
   }
 
   openSignUp(){

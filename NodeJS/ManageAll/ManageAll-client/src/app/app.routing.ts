@@ -6,7 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { PageNotFoundComponent } from './other/pageNotFound.component';
 //import { LoginPageComponent} from './login-page/login-page.component';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
-import{ SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.component';
+import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },

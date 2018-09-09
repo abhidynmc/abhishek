@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+// import { LoginPopupComponent } from '../login-popup/login-popup.component';
+// import { MatDialog } from '@angular/material';
 
 @Component({
     selector:'contact-page',
@@ -6,5 +8,19 @@ import {Component} from '@angular/core';
 })
 
 export class ContactComponent{
+   
     page="Contact";
+    //constructor(public dialog : MatDialog) { }
+
+   
+//   ngOnInit() {
+//     console.log("In Popup Handler Component");
+//     setTimeout(() => this.dialog.open(LoginPopupComponent, { panelClass: 'custom-dialog-container' }).afterClosed().subscribe(result => {
+//       console.log(`Dialog result: ${result}`);
+//     }));
+//   }
+//   ngOnDestroy(): void {
+//     this.dialog.closeAll();
+// }
 }
+

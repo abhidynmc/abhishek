@@ -5,6 +5,7 @@ import { IOrganizationDomains } from './iorganization-domains';
 import { IOrganizationRole } from './iorganization-role';
 import { MatDialog } from '@angular/material';
 import { SignUpServices } from './sign-up-services.service';
+import { LoginPopupComponent } from '../login-popup/login-popup.component';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
@@ -124,7 +125,7 @@ export class SignUpCompleteComponent implements OnInit {
     this.OtherRole=!this.OtherRole;
   }
   ngOnInit() {
-    setInterval(()=> this.dialog.closeAll());
+    // setInterval(()=> this.dialog.closeAll());
     // this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
     // console.log("Sign Up Data from DataService :"+this.signUpData.email);
   }

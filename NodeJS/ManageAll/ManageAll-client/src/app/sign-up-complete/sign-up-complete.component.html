@@ -3,8 +3,7 @@
   {{signUpData.password}} -->
 <div class="container"><hr>
 <h6><mat-icon color="primary"> border_color</mat-icon>&nbsp;<u>Complete your sign up.</u></h6>
-<!-- <mat-vertical-stepper linear> -->
-  <mat-vertical-stepper>
+  <mat-vertical-stepper linear>
     <mat-step [stepControl]="signUpPersonalForm">
       <form [formGroup]="signUpPersonalForm" (ngSubmit)="SubmitSignUpPersonalForm(signUpPersonalForm.value)">
         <ng-template matStepLabel>Fill out your personal details.</ng-template>
@@ -104,8 +103,8 @@
           <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['aboutOrganization'].valid && signUpOrganizationForm.controls['aboutOrganization'].touched}">
             <mat-form-field>
                 <mat-label>About Organization:</mat-label>
-                <textarea matInput [formControl]="signUpOrganizationForm.controls['aboutOrganization']"></textarea>
-                <mat-icon matSuffix>business_center</mat-icon>
+                <textarea matTextareaAutosize matAutosizeMinRows=3 matAutosizeMaxRows=5 matInput [formControl]="signUpOrganizationForm.controls['aboutOrganization']"></textarea>
+                <mat-icon matSuffix>description</mat-icon>
                 <mat-error *ngIf="signUpOrganizationForm.controls['aboutOrganization'].hasError('required') && signUpOrganizationForm.controls['aboutOrganization'].touched">Please type about organization</mat-error>
             </mat-form-field>
         </div> 
@@ -113,14 +112,14 @@
           <mat-form-field>
               <mat-label>Founder:</mat-label>
               <input matInput [formControl]="signUpOrganizationForm.controls['founder']">
-              <mat-icon matSuffix>business_center</mat-icon>
+              <mat-icon matSuffix>contacts</mat-icon>
               <mat-error *ngIf="signUpOrganizationForm.controls['founder'].hasError('required') && signUpOrganizationForm.controls['founder'].touched">Please type organization's founder name</mat-error>
           </mat-form-field>
           &nbsp;
           <mat-form-field>
             <mat-label>Founded In:</mat-label>
             <input matInput [formControl]="signUpOrganizationForm.controls['foundedIn']">
-            <mat-icon matSuffix>business_center</mat-icon>
+            <mat-icon matSuffix>event_note</mat-icon>
             <mat-hint>Please type only year, e.g., 1978.</mat-hint>
             <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('required') && signUpOrganizationForm.controls['foundedIn'].touched">Please type year of foundation</mat-error>
             <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('maxLength') && signUpOrganizationForm.controls['foundedIn'].touched">Please type valid year</mat-error>
@@ -129,7 +128,7 @@
         <mat-form-field>
           <mat-label>Location:</mat-label>
           <input matInput [formControl]="signUpOrganizationForm.controls['location']">
-          <mat-icon matSuffix>business_center</mat-icon>
+          <mat-icon matSuffix>my_location</mat-icon>
           <mat-error *ngIf="signUpOrganizationForm.controls['location'].hasError('required') && signUpOrganizationForm.controls['location'].touched">Please type the location.</mat-error>
       </mat-form-field>
       </div>
@@ -137,7 +136,7 @@
         <mat-form-field>
             <mat-label>Company Size:</mat-label>
             <input matInput [formControl]="signUpOrganizationForm.controls['companySize']">
-            <mat-icon matSuffix>business_center</mat-icon>
+            <mat-icon matSuffix>aspect_ratio</mat-icon>
             <mat-error *ngIf="signUpOrganizationForm.controls['companySize'].hasError('required') && signUpOrganizationForm.controls['companySize'].touched">Please type company size.</mat-error>
         </mat-form-field>
       &nbsp;
@@ -148,6 +147,7 @@
             {{dom.domainName}}
           </mat-option>
         </mat-select>
+        <mat-icon matSuffix>domain</mat-icon>
         <mat-error *ngIf="signUpOrganizationForm.controls['domain'].hasError('required') && signUpOrganizationForm.controls['domain'].touched">Please choose a domain.</mat-error>
     </mat-form-field>
     </div> 
@@ -160,13 +160,14 @@
           </mat-option>
           <mat-option (click)="clickOthers()" value="Others">Others</mat-option>
         </mat-select>
+        <mat-icon matSuffix>accessibility</mat-icon>
         <mat-error *ngIf="signUpOrganizationForm.controls['yourRole'].hasError('required') && signUpOrganizationForm.controls['yourRole'].touched">Please choose your role.</mat-error>
     </mat-form-field>
     &nbsp;
     <mat-form-field *ngIf="OtherRole">
         <mat-label>Other Role:</mat-label>
         <input  matInput [formControl]="signUpOrganizationForm.controls['yourRole']" placeholder="Other Role">
-        <mat-icon matSuffix>business_center</mat-icon>
+        <mat-icon matSuffix>accessibility</mat-icon>
         <mat-error *ngIf="signUpOrganizationForm.controls['yourRole'].hasError('required') && signUpOrganizationForm.controls['yourRole'].touched">Please choose your role.</mat-error>
     </mat-form-field>
   </div>
