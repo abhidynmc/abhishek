@@ -127,7 +127,7 @@ export class SignUpCompleteComponent implements OnInit {
     this.personalFormData=<IPersonalForm>this.signUpPersonalForm.value;
   }
   submitFinal(){
-    console.log("From Personal Form:"+this.personalFormData.password) ;
+    console.log("From Personal Form:"+this.personalFormData.password);
     if(this.employee)
     console.log("From Employee Form"+this.employeeFormData.organizationName.name);
     else if(this.organization)

@@ -8,16 +8,30 @@ var path= require("path");
 
 var app=express();
 
-const route= require('./routes/route');
+const route= require('./routes/UserRoute');
 
 var SERVER_NAME="localhost";
 
-// mongoose.connect("ongodb://"+SERVER_NAME+"27017/manageall/")
+mongoose.connect("mongodb://"+SERVER_NAME+":27017/ManageAll",  { useNewUrlParser: true });
 const port=3000;
+
+//on connection
+mongoose.connection.on('connected', ()=>{
+    console.log('Connected to the mongo db @ 27017');
+});
+
+mongoose.connection.on('error', (err)=>{
+    if(err){
+        console.log('Error in Database connection '+err);
+    }
+});
 
 app.use(cors());
 
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
+    extended: true
+  }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -30,13 +44,3 @@ app.get('/', (req, res)=>{
 app.listen(port, ()=>{
     console.log("server started at port: "+port);
 })
-// http.createServer(function (request, response) {
-//     // Send the HTTP header 
-//     // HTTP Status: 200 : OK
-//     // Content Type: text/plain
-//     response.writeHead(200, {'Content-Type': 'text/plain'});
-    
-//     // Send the response body as "Hello World"
-//     response.end('Hello World\n');
-//  }).listen(8081); 
- // Console will print the message
