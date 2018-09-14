@@ -5,7 +5,9 @@ import { IOrganizationDomains } from './iorganization-domains';
 import { IOrganizationRole } from './iorganization-role';
 import { MatDialog } from '@angular/material';
 import { SignUpServices } from './sign-up-services.service';
-import { LoginPopupComponent } from '../login-popup/login-popup.component';
+import { IPersonalForm } from '../sign-up-complete/ipersonal-form';
+import { IEmployeeForm } from '../sign-up-complete/iemployee-form';
+import { IOrganizationForm } from '../sign-up-complete/iorganization-form';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
@@ -26,7 +28,10 @@ export class SignUpCompleteComponent implements OnInit {
   organization:boolean;
   organizationRoles:Array<IOrganizationRole>;
   organizationDomains:Array<IOrganizationDomains>;
-  
+  organizationFormData:any;
+  employeeFormData:any;
+  personalFormData:any;
+
   // organizationData:Array<IOrganizationData>=[
   //     new OrganizationData(1,"TCS", 12,"IT Company", "Abhi", 1968, "Delhi", "IT", 34),
   //     new OrganizationData(2,"Wipro", 14, "Another IT Company", "Poonam", 1978,"Gurgaon", "IT", 56)
@@ -35,6 +40,10 @@ export class SignUpCompleteComponent implements OnInit {
   constructor(private data: DataService, public dialog: MatDialog, fb: FormBuilder, public signUpServices: SignUpServices) {
 
     this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
+    if(this.signUpData==null){
+      this.signUpData.email=null;
+      this.signUpData.password=null;
+    }
 
     this.organizationData=this.signUpServices.orgData();
     this.organizationDomains=this.signUpServices.getOrgDomains();
@@ -101,16 +110,28 @@ export class SignUpCompleteComponent implements OnInit {
     return q;
   }
   SubmitSignUpOrganizationForm(value: any):void{
-    console.log('Reactive Form Data: ')
+    console.log('Reactive Form Data: ');
     console.log(value);
+    // let jsonString = JSON.stringify(this.signUpOrganizationForm.value);
+    // this.organizationFormData=<IOrganizationData>JSON.parse(jsonString);
+    this.organizationFormData=<IOrganizationData>this.signUpOrganizationForm.value;
   }
   SubmitSignUpEmployeeForm(value: any):void{
     console.log('Reactive Form Data: ')
     console.log(value);
+    this.employeeFormData=<IEmployeeForm>this.signUpEmployeeForm.value;
   }
   SubmitSignUpPersonalForm(value: any):void{
-    console.log('Reactive Form Data: ')
+    console.log('Reactive Form Data: ');
     console.log(value);
+    this.personalFormData=<IPersonalForm>this.signUpPersonalForm.value;
+  }
+  submitFinal(){
+    console.log("From Personal Form:"+this.personalFormData.password) ;
+    if(this.employee)
+    console.log("From Employee Form"+this.employeeFormData.organizationName.name);
+    else if(this.organization)
+    console.log("From organization form"+this.organizationFormData.companySize);
   }
   chooseRole(data: String){
     if(data=='employee'){
@@ -125,9 +146,6 @@ export class SignUpCompleteComponent implements OnInit {
     this.OtherRole=!this.OtherRole;
   }
   ngOnInit() {
-    // setInterval(()=> this.dialog.closeAll());
-    // this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
-    // console.log("Sign Up Data from DataService :"+this.signUpData.email);
   }
 
 }

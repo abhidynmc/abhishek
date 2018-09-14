@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule, MatRadioModule, MatRadioButton
-,MatSelectModule  } from "@angular/material";
+,MatSelectModule, MatCheckboxModule  } from "@angular/material";
 
 import { DataService } from './app.service';
 
@@ -19,6 +19,7 @@ import { LoginPopupComponent } from './login-popup/login-popup.component';
 import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
 import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-all-client-console.module';
 import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.com
     PageNotFoundComponent,
     LoginPopupComponent,
     SignUpPopupComponent,
-    SignUpCompleteComponent
+    SignUpCompleteComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.com
     MatStepperModule,
     MatRadioModule,
     MatSelectModule,
+    MatCheckboxModule,
     ManageAllClientConsoleModule
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
