@@ -8,7 +8,10 @@ var path= require("path");
 
 var app=express();
 
-const route= require('./routes/UserRoute');
+const userRoute= require('./routes/UserRoute');
+const orgRoute=require('./routes/OrgRoute');
+const orgDomainRoute=require('./routes/OrgDomainRoute');
+const userRoleRoute=require('./routes/UserRolesRoute');
 
 var SERVER_NAME="localhost";
 
@@ -35,11 +38,9 @@ app.use(bodyparser.urlencoded({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', route);
+app.use('/api', [orgRoute,userRoute,orgDomainRoute,userRoleRoute]);
 //testing server
-app.get('/', (req, res)=>{
-    res.send('foobar');
-});
+
 
 app.listen(port, ()=>{
     console.log("server started at port: "+port);

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../app.service';
-import { IOrganizationData } from './organization-data';
+import { IOrganizationData, OrganizationData } from './organization-data';
 import { IOrganizationDomains } from './iorganization-domains';
 import { IOrganizationRole } from './iorganization-role';
 import { MatDialog } from '@angular/material';
 import { SignUpServices } from './sign-up-services.service';
 import { IPersonalForm } from '../sign-up-complete/ipersonal-form';
 import { IEmployeeForm } from '../sign-up-complete/iemployee-form';
-import { IOrganizationForm } from '../sign-up-complete/iorganization-form';
+import { IUserData,UserDataImpl } from './iuser-data';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
@@ -26,17 +26,18 @@ export class SignUpCompleteComponent implements OnInit {
   employee:boolean;
   OtherRole:boolean;
   organization:boolean;
-  organizationRoles:Array<IOrganizationRole>;
-  organizationDomains:Array<IOrganizationDomains>;
-  organizationFormData:any;
+  organizationFormData:OrganizationData;
   employeeFormData:any;
   personalFormData:any;
-
+  userId:string;
   // organizationData:Array<IOrganizationData>=[
   //     new OrganizationData(1,"TCS", 12,"IT Company", "Abhi", 1968, "Delhi", "IT", 34),
   //     new OrganizationData(2,"Wipro", 14, "Another IT Company", "Poonam", 1978,"Gurgaon", "IT", 56)
   // ];
   organizationData:Array<IOrganizationData>;
+  organizationRoles:Array<IOrganizationRole>;
+  organizationDomains:Array<IOrganizationDomains>;
+
   constructor(private data: DataService, public dialog: MatDialog, fb: FormBuilder, public signUpServices: SignUpServices) {
 
     this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
@@ -45,34 +46,39 @@ export class SignUpCompleteComponent implements OnInit {
       this.signUpData.password=null;
     }
 
-    this.organizationData=this.signUpServices.orgData();
-    this.organizationDomains=this.signUpServices.getOrgDomains();
-    this.organizationRoles=this.signUpServices.getOrgRoles();
-
+    this.signUpServices.orgData().subscribe((res)=>{
+      this.organizationData=JSON.parse(JSON.stringify(res));
+    });
+    this.signUpServices.getOrgDomains().subscribe((res)=>{
+      this.organizationDomains=JSON.parse(JSON.stringify(res));
+    });
+    this.signUpServices.getOrgRoles().subscribe((res)=>{
+      this.organizationRoles=JSON.parse(JSON.stringify(res));
+    })
     this.OtherRole=false;
 
     this.signUpPersonalForm=fb.group({
       firstname: [null, Validators.required],
       lastname: [null, Validators.required],
-      email:[this.signUpData.email, Validators.compose([Validators.required, Validators.email])],
+      email:[this.signUpData.email, Validators.compose([Validators.required, Validators.email]), this.isEmailUnique.bind(this)],
       contactNo:[null, Validators.compose([Validators.required,  Validators.pattern(/^-?(0|[1-9]\d*)?$/)])],
       password: [this.signUpData.password, Validators.compose([Validators.required, this.passwordValueValidator])],
       confirm_password: [null, [Validators.required]]
     }, {validator: this.passwordConfirming});
 
     this.signUpOrganizationForm=fb.group({
-      organizationName:[null, Validators.required,this.isOrganizationUnique.bind(this)],
-      aboutOrganization:[null, Validators.required],
+      orgName:[null, Validators.required,this.isOrganizationUnique.bind(this)],
+      about:[null, Validators.required],
       founder:[null, Validators.required],
-      foundedIn:[null, Validators.compose([Validators.required, Validators.maxLength(4)])],
+      foundedIn:[null, Validators.compose([Validators.required, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)])],
       location:[null, Validators.required],
       domain:[null, Validators.required],
-      yourRole:[null, Validators.required],
-      companySize: [null, Validators.required]
+      role:[null, Validators.required],
+      companySize: [null, Validators.compose([Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)])]
     });
 
     this.signUpEmployeeForm=fb.group({
-      organizationName:[null, Validators.required]
+      orgName:[null, Validators.required]
     });
    }
 
@@ -93,13 +99,35 @@ export class SignUpCompleteComponent implements OnInit {
     console.log("Checking for organization name");
     const q = new Promise((resolve, reject) => {
       setTimeout(() => {
-        this.signUpServices.isOrgRegisterd(control.value).subscribe((resp) => {
+        this.signUpServices.isOrgRegistered(control.value).subscribe((resp) => {
           console.log("Response :"+resp);
-          if(resp==null){
+          if(resp==false){
             // console.log("Response Inside:"+resp);
             resolve(resp);
-          }else{
+          }else if(resp==true){
             resolve({'isOrgUnique': true}); 
+             
+          }
+        }, (err) => {
+          resolve({'error': true});
+        });
+          
+      }, 1000);
+    });
+    return q;
+  }
+  isEmailUnique(control: FormControl) {
+    console.log("Checking for email");
+    const q = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.signUpServices.isEmailRegistered(control.value).subscribe((resp) => {
+          console.log("Response :"+resp);
+          if(resp==false){
+            // console.log("Response Inside:"+resp);
+            resolve(resp);
+          }else if(resp==true){
+            resolve({'isEmailUnique': true}); 
+             
           }
         }, (err) => {
           resolve({'error': true});
@@ -114,12 +142,12 @@ export class SignUpCompleteComponent implements OnInit {
     console.log(value);
     // let jsonString = JSON.stringify(this.signUpOrganizationForm.value);
     // this.organizationFormData=<IOrganizationData>JSON.parse(jsonString);
-    this.organizationFormData=<IOrganizationData>this.signUpOrganizationForm.value;
+    this.organizationFormData=<OrganizationData>this.signUpOrganizationForm.value;
   }
   SubmitSignUpEmployeeForm(value: any):void{
     console.log('Reactive Form Data: ')
-    console.log(value);
-    this.employeeFormData=<IEmployeeForm>this.signUpEmployeeForm.value;
+    console.log("Organization :"+value.orgName);
+    this.employeeFormData=<IEmployeeForm>this.signUpEmployeeForm.value.orgName;
   }
   SubmitSignUpPersonalForm(value: any):void{
     console.log('Reactive Form Data: ');
@@ -128,10 +156,29 @@ export class SignUpCompleteComponent implements OnInit {
   }
   submitFinal(){
     console.log("From Personal Form:"+this.personalFormData.password);
-    if(this.employee)
-    console.log("From Employee Form"+this.employeeFormData.organizationName.name);
-    else if(this.organization)
+    
+    if(this.employee){
+    console.log("From Employee Form"+this.employeeFormData.organizationName);
+    let userData= new UserDataImpl(null, this.personalFormData.firstname, this.personalFormData.lastname, this.personalFormData.email,
+        this.personalFormData.contactNo, this.personalFormData.password, "Employee", this.employeeFormData.orgName);    
+        this.signUpServices.submitUserData(userData).then(val=>{
+      console.log("Val :"+val);
+      this.userId=JSON.parse(JSON.stringify(val));
+      console.log("Val :"+this.userId);
+    });
+    
+    }
+    else if(this.organization){
     console.log("From organization form"+this.organizationFormData.companySize);
+    let userData=
+      new UserDataImpl(null, this.personalFormData.firstname, this.personalFormData.lastname, this.personalFormData.email,
+        this.personalFormData.contactNo, this.personalFormData.password, this.organizationFormData.role.roleName, this.organizationFormData.orgName);
+        this.signUpServices.submitUserData(userData).then(val=>{
+          this.userId=JSON.parse(JSON.stringify(val));
+          this.organizationFormData.owner=this.userId;
+          this.signUpServices.submitOrganizationData(this.organizationFormData);
+        });
+      }
   }
   chooseRole(data: String){
     if(data=='employee'){

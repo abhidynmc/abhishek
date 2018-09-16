@@ -24,6 +24,10 @@ const UserDataSchema=mongoose.Schema({
     role:{
         type:String,
         default:'employee'
+    },
+    organization:{
+        type:String, 
+        require:true
     }
 });
 

@@ -27,8 +27,11 @@
                 <mat-label>Email:</mat-label>
                 <input matInput [formControl]="signUpPersonalForm.controls['email']">
                 <mat-icon matSuffix>mail</mat-icon>
+                <mat-hint *ngIf="signUpPersonalForm.controls['email'].hasError('isEmailUnique')">Account Not Available!</mat-hint>
+                <mat-hint *ngIf="!signUpPersonalForm.controls['email'].hasError('isEmailUnique') && signUpPersonalForm.controls['email'].touched">Account Available!</mat-hint>
                 <mat-error *ngIf="signUpPersonalForm.controls['email'].hasError('required') && signUpPersonalForm.controls['email'].touched">Please type your email address.</mat-error>
                 <mat-error *ngIf="signUpPersonalForm.controls['email'].hasError('email') && signUpPersonalForm.controls['email'].touched">Please type correct email address.</mat-error>
+                <mat-error *ngIf="signUpPersonalForm.controls['email'].hasError('isEmailUnique') && signUpPersonalForm.controls['email'].touched">This email is already registered with us.</mat-error>
             </mat-form-field>
             &nbsp;
             <mat-form-field>
@@ -74,13 +77,13 @@
         </mat-radio-group>
         <form *ngIf="employee" [formGroup]="signUpEmployeeForm" (ngSubmit)="SubmitSignUpEmployeeForm(signUpEmployeeForm.value)">
           <mat-form-field>
-            <mat-select placeholder="Your Organization" [formControl]="signUpEmployeeForm.controls['organizationName']">
+            <mat-select placeholder="Your Organization" [formControl]="signUpEmployeeForm.controls['orgName']">
               <mat-option>--</mat-option>
               <mat-option *ngFor="let org of organizationData" [value]="org">
-                {{org.name}}:{{org.location}}
+                {{org.orgName}}:{{org.location}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="signUpEmployeeForm.controls['organizationName']">Please choose an organization</mat-error>
+            <mat-error *ngIf="signUpEmployeeForm.controls['orgName']">Please choose an organization</mat-error>
           </mat-form-field>
           <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -89,23 +92,23 @@
         </form>
         <form *ngIf="organization" [formGroup]="signUpOrganizationForm" (ngSubmit)="SubmitSignUpOrganizationForm(signUpOrganizationForm.value)">
           <label>Add your Organization.</label>
-          <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['organizationName'].valid && signUpOrganizationForm.controls['organizationName'].touched}">
+          <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['orgName'].valid && signUpOrganizationForm.controls['orgName'].touched}">
               <mat-form-field>
                   <mat-label>Organization Name:</mat-label>
-                  <input matInput [formControl]="signUpOrganizationForm.controls['organizationName']">
+                  <input matInput [formControl]="signUpOrganizationForm.controls['orgName']">
                   <mat-icon matSuffix>business_center</mat-icon>
-                  <mat-hint *ngIf="!signUpOrganizationForm.controls['organizationName'].hasError('isOrgUnique') && signUpOrganizationForm.controls['organizationName'].touched">Organization Available!</mat-hint>
-                  <mat-error *ngIf="signUpOrganizationForm.controls['organizationName'].hasError('required') && signUpOrganizationForm.controls['organizationName'].touched">Please type your organization name.</mat-error>
-                  <mat-error *ngIf="signUpOrganizationForm.controls['organizationName'].hasError('isOrgUnique') && signUpOrganizationForm.controls['organizationName'].touched">This organization is already registered with us.</mat-error>
-                  <mat-error *ngIf="signUpOrganizationForm.controls['organizationName'].hasError('error') && signUpOrganizationForm.controls['organizationName'].touched">There has been some error, please try again after sometimes.</mat-error>
+                  <mat-hint *ngIf="!signUpOrganizationForm.controls['orgName'].hasError('isOrgUnique') && signUpOrganizationForm.controls['orgName'].touched">Organization Available!</mat-hint>
+                  <mat-error *ngIf="signUpOrganizationForm.controls['orgName'].hasError('required') && signUpOrganizationForm.controls['orgName'].touched">Please type your organization name.</mat-error>
+                  <mat-error *ngIf="signUpOrganizationForm.controls['orgName'].hasError('isOrgUnique') && signUpOrganizationForm.controls['orgName'].touched">This organization is already registered with us.</mat-error>
+                  <mat-error *ngIf="signUpOrganizationForm.controls['orgName'].hasError('error') && signUpOrganizationForm.controls['orgName'].touched">There has been some error, please try again after sometimes.</mat-error>
               </mat-form-field>
           </div>
-          <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['aboutOrganization'].valid && signUpOrganizationForm.controls['aboutOrganization'].touched}">
+          <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['about'].valid && signUpOrganizationForm.controls['about'].touched}">
             <mat-form-field>
                 <mat-label>About Organization:</mat-label>
-                <textarea matTextareaAutosize matAutosizeMinRows=3 matAutosizeMaxRows=5 matInput [formControl]="signUpOrganizationForm.controls['aboutOrganization']"></textarea>
+                <textarea matTextareaAutosize matAutosizeMinRows=3 matAutosizeMaxRows=5 matInput [formControl]="signUpOrganizationForm.controls['about']"></textarea>
                 <mat-icon matSuffix>description</mat-icon>
-                <mat-error *ngIf="signUpOrganizationForm.controls['aboutOrganization'].hasError('required') && signUpOrganizationForm.controls['aboutOrganization'].touched">Please type about organization</mat-error>
+                <mat-error *ngIf="signUpOrganizationForm.controls['about'].hasError('required') && signUpOrganizationForm.controls['about'].touched">Please type about organization</mat-error>
             </mat-form-field>
         </div> 
         <div class="form-group" [ngClass]="{'has-error':(!signUpOrganizationForm.controls['founder'].valid && signUpOrganizationForm.controls['founder'].touched) || (!signUpOrganizationForm.controls['foundedIn'].valid && signUpOrganizationForm.controls['foundedIn'].touched) || (!signUpOrganizationForm.controls['location'].valid && signUpOrganizationForm.controls['location'].touched)}">
@@ -123,6 +126,7 @@
             <mat-hint>Please type only year, e.g., 1978.</mat-hint>
             <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('required') && signUpOrganizationForm.controls['foundedIn'].touched">Please type year of foundation</mat-error>
             <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('maxLength') && signUpOrganizationForm.controls['foundedIn'].touched">Please type valid year</mat-error>
+            <mat-error *ngIf="signUpOrganizationForm.controls['foundedIn'].hasError('pattern') && signUpOrganizationForm.controls['foundedIn'].touched">Please enter valid year</mat-error>
         </mat-form-field>
         &nbsp;
         <mat-form-field>
@@ -138,6 +142,7 @@
             <input matInput [formControl]="signUpOrganizationForm.controls['companySize']">
             <mat-icon matSuffix>aspect_ratio</mat-icon>
             <mat-error *ngIf="signUpOrganizationForm.controls['companySize'].hasError('required') && signUpOrganizationForm.controls['companySize'].touched">Please type company size.</mat-error>
+            <mat-error *ngIf="signUpOrganizationForm.controls['companySize'].hasError('pattern') && signUpOrganizationForm.controls['companySize'].touched">Please enter valid size</mat-error>
         </mat-form-field>
       &nbsp;
       <mat-form-field>
@@ -151,9 +156,9 @@
         <mat-error *ngIf="signUpOrganizationForm.controls['domain'].hasError('required') && signUpOrganizationForm.controls['domain'].touched">Please choose a domain.</mat-error>
     </mat-form-field>
     </div> 
-    <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['yourRole'].valid && signUpOrganizationForm.controls['yourRole'].touched}">
+    <div class="form-group" [ngClass]="{'has-error':!signUpOrganizationForm.controls['role'].valid && signUpOrganizationForm.controls['role'].touched}">
       <mat-form-field>
-        <mat-select placeholder="Your Role" [formControl]="signUpOrganizationForm.controls['yourRole']">
+        <mat-select placeholder="Your Role" [formControl]="signUpOrganizationForm.controls['role']">
           <mat-option>--</mat-option>
           <mat-option *ngFor="let role of organizationRoles" [value]="role">
             {{role.roleName}}
@@ -161,14 +166,14 @@
           <mat-option (click)="clickOthers()" value="Others">Others</mat-option>
         </mat-select>
         <mat-icon matSuffix>accessibility</mat-icon>
-        <mat-error *ngIf="signUpOrganizationForm.controls['yourRole'].hasError('required') && signUpOrganizationForm.controls['yourRole'].touched">Please choose your role.</mat-error>
+        <mat-error *ngIf="signUpOrganizationForm.controls['role'].hasError('required') && signUpOrganizationForm.controls['role'].touched">Please choose your role.</mat-error>
     </mat-form-field>
     &nbsp;
     <mat-form-field *ngIf="OtherRole">
         <mat-label>Other Role:</mat-label>
-        <input  matInput [formControl]="signUpOrganizationForm.controls['yourRole']" placeholder="Other Role">
+        <input  matInput [formControl]="signUpOrganizationForm.controls['role']" placeholder="Other Role">
         <mat-icon matSuffix>accessibility</mat-icon>
-        <mat-error *ngIf="signUpOrganizationForm.controls['yourRole'].hasError('required') && signUpOrganizationForm.controls['yourRole'].touched">Please choose your role.</mat-error>
+        <mat-error *ngIf="signUpOrganizationForm.controls['role'].hasError('required') && signUpOrganizationForm.controls['role'].touched">Please choose your role.</mat-error>
     </mat-form-field>
   </div>
           <button mat-button matStepperPrevious>Back</button>

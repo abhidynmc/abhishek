@@ -2,26 +2,10 @@
 var jsonQuery = require('json-query');
 const express= require("express");
 const router= express.Router();
+var logger = require('logger').createLogger();
 
 // const Contact= require('../models/contacts');
 const User=require('../models/UserModel');
-
-var data = {
-    orgData: [
-      {name: 'TCS', country: 'NZ'},
-      {name: 'Wipro', country : 'AU'},
-      {name: 'Infi', country: 'NZ'}
-    ]
-  }
-  
-router.post("/organization/search/", (req, res, next)=>{
-    var result=jsonQuery('orgData[name='+req.body.name+'].name', {
-        data:data
-    }).value;
-   // var result=req.params.name;
-    //  console.log(result);
-    res.json(result);    
-});
 
 
 //- - User Services  - -
@@ -37,22 +21,23 @@ router.get('/users', (req, res, next)=>{
 //add user
 router.post('/user', (req, res, next)=>{
     //logic to add contact
-    console.log("Calling user");
+    logger.info("Calling user for req: "+JSON.stringify(req.body));
     let newUser= new User({
         firstname:req.body.firstname, 
         lastname:req.body.lastname,
         email:req.body.email,
         contactNo:req.body.contactNo,
         password:req.body.password,
-        role:req.body.role
+        role:req.body.role,
+        organization:req.body.organization
     });
-    console.log(JSON.stringify(req.body));
+    console.log(newUser);
     newUser.save((err, user)=>{
         if(err){
             res.json({msg: 'Failed to add user'});
         }
         else{
-            res.json({msg: 'User has been successfully added'}+user);
+            res.json(user);
         }
     });
 });
@@ -67,7 +52,8 @@ router.post('/user/update/:id', (req, res, next)=>{
         email:req.body.email,
         contactNo:req.body.contactNo,
         password:req.body.password,
-        role:req.body.role
+        role:req.body.role,
+        organization:req.body.organization
     });
     
 User.findByIdAndUpdate(id, newUser, {new :true}, function(err, result){
@@ -96,7 +82,7 @@ router.delete('/user/:id', (req, res, next)=>{
 });
 //searchcontactby ID
 router.get('/user/search/:id', (req, res, next)=>{
-    user.findById({_id: req.params.id}, function(err, user){
+    User.findById({_id: req.params.id}, function(err, user){
         if(err){
             res.json({msg: 'Failed to get data for :'+req.params.id});
         }
@@ -105,5 +91,18 @@ router.get('/user/search/:id', (req, res, next)=>{
         }    
     });
 });
-
-module.exports= router;
+//Search By Email
+router.put('/user/searchByEmail', (req, res, next)=>{
+    logger.info("Calling /user/searchByEmail Service for email: "+req.body.email);
+    User.find({email: req.body.email}, function(err, user){
+        if(err){
+            res.json({msg: 'Failed to get data for :'+req.params.email});
+        }
+        else if(user.length>=1){
+            res.json(true);
+        }else{
+            res.json(false);
+        }  
+    });
+});
+module.exports= router; 

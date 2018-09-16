@@ -1,5 +1,5 @@
 export interface IPersonalForm {
-    firstname: string,
+      firstname: string,
       lastname: string,
       email:string,
       contactNo:number,

@@ -1,3 +1,3 @@
 export interface IEmployeeForm {
-    organizationName:string;
+    orgName:string;
 }

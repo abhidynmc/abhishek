@@ -1,7 +1,7 @@
 const mongoose= require('mongoose');
 
 const OrganizationDataSchema=mongoose.Schema({
-    orgname:{
+    orgName:{
         type:String,
         require:true
     },
@@ -21,14 +21,22 @@ const OrganizationDataSchema=mongoose.Schema({
         type:String,
         require:true
     },
-    role:{
-        type:String,
-        require:true
-    },
     companySize:{
         type:Number,
         require:true
+    },
+    domain:{
+        type:String,
+        require:true
+    },
+    owner:{
+        type:String,
+        required:true
+    },
+    role:{
+        type:String,
+        default: "Employee"
     }
 });
 
-const Org=module.exports=mongoose.model('Organization', OrganizationDataSchema);
+const Org=module.exports=mongoose.model('organization', OrganizationDataSchema);
