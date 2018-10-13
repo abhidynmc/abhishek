@@ -16,18 +16,23 @@ body{
 }
 .navbar{
     border: 0;
+    border-bottom: 2px;
+    font-size: 14px;
+    margin-bottom: 0px;
     /* padding : 0px; */
 }
 nav a {
     float: right !important;
 }
 .active{
-    background-color: lightgrey;
+    /* background-color: lightgrey;
     border-radius: 10px;
-    padding: 0px;
+    padding: 0px; */
+    border-bottom: 3px solid blue;
 }
 .topborder {
-    border: 1px solid lightgrey;
+    border: 0.5px solid lightgrey;
+    margin: 0%;
 }  
 /* Mat styles */
 

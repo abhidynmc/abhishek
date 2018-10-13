@@ -3,6 +3,7 @@
     <div class="card-body">
       <h5 class="card-title">Go to Console&nbsp;<mat-icon>bar_chart</mat-icon></h5>
       <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+        <mat-error *ngIf="loginStatus" style="font-size:12px;font-weight: bold;align-content: center">The LoginId or Password was incorrect.</mat-error>
         <div class="form-group" [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
             <mat-form-field appearance="outline">
                 <mat-label>Login ID:</mat-label>
@@ -27,6 +28,7 @@
           <label class="form-check-label" for="exampleCheck1">Remember Me</label>
           <a href="" class="forgetPassword">Forget password?</a>
         </div>
+        <!-- <p class="danger" *ngIf="loginStatus">The username or password was incorrect</p> -->
         <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>&nbsp; &nbsp; Or &nbsp; &nbsp;<button mat-raised-button  (click)="openSignUp()" [mat-dialog-close]="true">SignUp <mat-icon matSuffix>person_add</mat-icon></button>
       </form>
     </div>

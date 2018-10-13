@@ -12,6 +12,7 @@ const userRoute= require('./routes/UserRoute');
 const orgRoute=require('./routes/OrgRoute');
 const orgDomainRoute=require('./routes/OrgDomainRoute');
 const userRoleRoute=require('./routes/UserRolesRoute');
+const loginRoute=require('./routes/loginRoute');
 
 var SERVER_NAME="localhost";
 
@@ -38,7 +39,7 @@ app.use(bodyparser.urlencoded({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', [orgRoute,userRoute,orgDomainRoute,userRoleRoute]);
+app.use('/api', [orgRoute,userRoute,orgDomainRoute,userRoleRoute,loginRoute]);
 //testing server
 
 

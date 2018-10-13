@@ -44,6 +44,7 @@ router.post('/user', (req, res, next)=>{
 //upate
 router.post('/user/update/:id', (req, res, next)=>{
     //logic to update
+    logger.info("Calling /user/update/ service for :"+req.params.id);
     var id=req.params.id;
     let newUser= new User({
         _id:req.params.id,
@@ -55,13 +56,14 @@ router.post('/user/update/:id', (req, res, next)=>{
         role:req.body.role,
         organization:req.body.organization
     });
-    
-User.findByIdAndUpdate(id, newUser, {new :true}, function(err, result){
+    logger.info("Request Object :"+newUser);
+User.findOneAndUpdate({_id:id}, newUser, {new :true}, function(err, result){
     if(err){
         res.json({msg: 'Failed to update user'});
     }
     else{
         // res.json({msg: 'Contact ' +newContact.first_name+' '+newContact.last_name+ ' updated successfully'});
+        logger.info("Response from Mongo :"+result);
         res.json(result);
     }
 

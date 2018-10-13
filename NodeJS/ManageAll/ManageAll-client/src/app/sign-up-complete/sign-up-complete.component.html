@@ -182,13 +182,12 @@
       
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <!-- <mat-checkbox [(ngModel)]="checkedPolicy">I hereby accept the privacy ploicy for ManageAll</mat-checkbox>
-      <button mat-raised-button color="primary" [(ngModel)]="checkedPolicy" (click)="finalSubmit()">Finish</button> -->
+      <ng-template matStepLabel>Done</ng-template><br>
+       <mat-checkbox [(ngModel)]="checkedPolicy" (click)="agreementFlag=!agreementFlag"></mat-checkbox>I have read and understood the&nbsp;<span (click)="openPrivacyPolicy()" style="color:blue">Privacy Policy for ManageAll.</span>
       <div>
-        <button color="primary" mat-button  (click)="submitFinal()">Finish</button>
+        <button *ngIf="agreementFlag==true" color="primary" mat-button  (click)="submitFinal()">Finish</button>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
       </div>
     </mat-step>
   </mat-vertical-stepper> 

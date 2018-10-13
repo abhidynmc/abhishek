@@ -6,7 +6,7 @@ import { IOrganizationRole } from './iorganization-role';
 import { MatDialog } from '@angular/material';
 import { SignUpServices } from './sign-up-services.service';
 import { IPersonalForm } from '../sign-up-complete/ipersonal-form';
-import { IEmployeeForm } from '../sign-up-complete/iemployee-form';
+import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { IUserData,UserDataImpl } from './iuser-data';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
@@ -29,15 +29,11 @@ export class SignUpCompleteComponent implements OnInit {
   organizationFormData:OrganizationData;
   employeeFormData:any;
   personalFormData:any;
-  userId:string;
-  // organizationData:Array<IOrganizationData>=[
-  //     new OrganizationData(1,"TCS", 12,"IT Company", "Abhi", 1968, "Delhi", "IT", 34),
-  //     new OrganizationData(2,"Wipro", 14, "Another IT Company", "Poonam", 1978,"Gurgaon", "IT", 56)
-  // ];
+  userResData:UserDataImpl;
   organizationData:Array<IOrganizationData>;
   organizationRoles:Array<IOrganizationRole>;
   organizationDomains:Array<IOrganizationDomains>;
-
+  agreementFlag:boolean;
   constructor(private data: DataService, public dialog: MatDialog, fb: FormBuilder, public signUpServices: SignUpServices) {
 
     this.data.currentSignUpFormData.subscribe(data => this.signUpData=data);
@@ -56,7 +52,8 @@ export class SignUpCompleteComponent implements OnInit {
       this.organizationRoles=JSON.parse(JSON.stringify(res));
     })
     this.OtherRole=false;
-
+    this.agreementFlag=false;
+    
     this.signUpPersonalForm=fb.group({
       firstname: [null, Validators.required],
       lastname: [null, Validators.required],
@@ -146,9 +143,10 @@ export class SignUpCompleteComponent implements OnInit {
   }
   SubmitSignUpEmployeeForm(value: any):void{
     console.log('Reactive Form Data: ')
-    console.log("Organization :"+value.orgName);
-    this.employeeFormData=<IEmployeeForm>this.signUpEmployeeForm.value.orgName;
-  }
+    console.log("Organization :"+JSON.stringify(this.signUpEmployeeForm.value.orgName));
+    this.employeeFormData=<OrganizationData>JSON.parse(JSON.stringify(this.signUpEmployeeForm.value.orgName));
+    console.log("Employee Form data:"+this.employeeFormData);
+  } 
   SubmitSignUpPersonalForm(value: any):void{
     console.log('Reactive Form Data: ');
     console.log(value);
@@ -158,13 +156,12 @@ export class SignUpCompleteComponent implements OnInit {
     console.log("From Personal Form:"+this.personalFormData.password);
     
     if(this.employee){
-    console.log("From Employee Form"+this.employeeFormData.organizationName);
+    console.log("From Employee Form"+this.employeeFormData._id);
     let userData= new UserDataImpl(null, this.personalFormData.firstname, this.personalFormData.lastname, this.personalFormData.email,
-        this.personalFormData.contactNo, this.personalFormData.password, "Employee", this.employeeFormData.orgName);    
+        this.personalFormData.contactNo, this.personalFormData.password, "Employee", this.employeeFormData._id);    
         this.signUpServices.submitUserData(userData).then(val=>{
-      console.log("Val :"+val);
-      this.userId=JSON.parse(JSON.stringify(val));
-      console.log("Val :"+this.userId);
+        this.userResData=JSON.parse(JSON.stringify(val));
+      console.log("Response :"+this.userResData);
     });
     
     }
@@ -174,9 +171,12 @@ export class SignUpCompleteComponent implements OnInit {
       new UserDataImpl(null, this.personalFormData.firstname, this.personalFormData.lastname, this.personalFormData.email,
         this.personalFormData.contactNo, this.personalFormData.password, this.organizationFormData.role.roleName, this.organizationFormData.orgName);
         this.signUpServices.submitUserData(userData).then(val=>{
-          this.userId=JSON.parse(JSON.stringify(val));
-          this.organizationFormData.owner=this.userId;
-          this.signUpServices.submitOrganizationData(this.organizationFormData);
+          this.userResData=<UserDataImpl>JSON.parse(JSON.stringify(val));
+          this.organizationFormData.owner=this.userResData._id;
+          this.signUpServices.submitOrganizationData(this.organizationFormData).then(orgId=>{
+            this.userResData.organization=JSON.parse(JSON.stringify(orgId));
+            this.signUpServices.updateUserData(this.userResData);
+          });
         });
       }
   }
@@ -191,6 +191,12 @@ export class SignUpCompleteComponent implements OnInit {
   }
   clickOthers(){
     this.OtherRole=!this.OtherRole;
+  }
+  openPrivacyPolicy(){
+    console.log("In Sign Up Complete Component");
+    setTimeout(() => this.dialog.open(PrivacyPolicyComponent, { panelClass: 'custom-dialog-container' }).afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    }));
   }
   ngOnInit() {
   }

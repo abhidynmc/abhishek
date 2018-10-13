@@ -54,7 +54,7 @@ export class SignUpServices {
     const q = new Promise((resolve, reject) =>{
       this.http.post<UserDataImpl>('http://localhost:3000/api/user',UserData).subscribe((res)=>{
       if(res._id!=null)    
-         resolve(res._id);
+         resolve(res);
       else
         reject("Error : Failure occur while adding the user.");  
         }
@@ -67,10 +67,25 @@ export class SignUpServices {
     const q = new Promise((resolve, reject) =>{
       this.http.post<OrganizationData>('http://localhost:3000/api/org',OrgData).subscribe((res)=>{
         if(res._id!=null)    
-         resolve("Org successfully Added with id: "+res._id);
+         resolve(res._id);
       else
           reject("Error : Failure occur while adding the user.");  
       })
     });
+    return q;
+  }
+  updateUserData(userData:UserDataImpl){
+    console.log("Calling updateUserData for id: "+userData._id);
+    const q=new Promise((resolve,reject) =>{
+      this.http.post<UserDataImpl>('http://localhost:3000/api/user/update/'+userData._id, userData).subscribe((res)=>{
+        if(res._id!=null){
+          console.log("Updated user :"+res);
+          resolve(res);
+      }else{
+        reject("Error : Failure occur while updating the user.");
+        }
+      })
+    })
+    return q;
   }
 }

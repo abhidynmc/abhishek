@@ -12,11 +12,10 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
- // { path: 'app-login-page', component: LoginPageComponent},
   { path: 'app-login-popup', component: LoginPopupComponent},
   { path: 'app-sign-up-complete', component: SignUpCompleteComponent},
-  { path: '', redirectTo:'/home', pathMatch:'full'},
-  { path: '**', component: PageNotFoundComponent },
+  { path: '', redirectTo:'/home', pathMatch:'full'}
+  // { path: '**', component: PageNotFoundComponent },
 ];
 // export const appRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash:true});
 

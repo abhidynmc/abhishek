@@ -8,6 +8,7 @@ import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatB
 ,MatSelectModule, MatCheckboxModule  } from "@angular/material";
 
 import { DataService } from './app.service';
+import { LoginServices } from './login.service';
 
 import { AppComponent } from './app.component';   
 import { ContactComponent } from './contact/contact.component';
@@ -20,6 +21,7 @@ import { SignUpPopupComponent } from './sign-up-popup/sign-up-popup.component';
 import{ ManageAllClientConsoleModule } from './manage-all-client-console/manage-all-client-console.module';
 import { SignUpCompleteComponent } from './sign-up-complete/sign-up-complete.component';
 import { TestComponent } from './test/test.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { TestComponent } from './test/test.component';
     LoginPopupComponent,
     SignUpPopupComponent,
     SignUpCompleteComponent,
-    TestComponent
+    TestComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
@@ -56,9 +59,10 @@ import { TestComponent } from './test/test.component';
   ],
   entryComponents: [
     LoginPopupComponent,
-    SignUpPopupComponent
+    SignUpPopupComponent,
+    PrivacyPolicyComponent
   ],
-  providers: [SignUpPopupComponent, DataService],
+  providers: [SignUpPopupComponent, DataService, LoginServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

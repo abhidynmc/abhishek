@@ -17,12 +17,12 @@ public class HashDemo {
 		Map<Bean, String> h=new WeakHashMap<Bean, String>();
 			h.put(new Bean("ABC",23), "ABC");
 			h.put(new Bean("XYZ",23), "XYZ");
-			h.put(new Bean("ABC",23), "ABC");
+			h.put(new Bean("ABC",23), "ABCD");
 			Bean b=new Bean("HUG", 65);
 			h.put(b, "ty");
 			h.put(b, "dds");
 			
-			System.gc();// Only strong ref will persist e.g., Bean b=new Bean("HUG", 65); not weak ref e.g,h.put(new Bean("ABC",23), "ABC"); 
+//			System.gc();// Only strong ref will persist e.g., Bean b=new Bean("HUG", 65); not weak ref e.g,h.put(new Bean("ABC",23), "ABC"); 
 			
 			h.entrySet().stream().forEach(e->{
 				System.out.println(e.getValue()+"  :  "+e.getKey()+", hashcode :"+e.getValue().hashCode());
@@ -45,7 +45,7 @@ public class HashDemo {
 				unsorted.put("test", "test");//ConcurrentModificationException occur normally
 			});
 		
-		Map<String, String> sortedMap=new TreeMap<String, String>((o1,o2)->o2.compareTo(o1));
+		Map<String, String> sortedMap=new TreeMap<String, String>((o1,o2)->o1.compareTo(o2));
 			sortedMap.putAll(unsorted);
 			System.out.println("Sorted Map");
 			sortedMap.entrySet().stream().forEach(e->{
