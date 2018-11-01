@@ -7,6 +7,8 @@ import { LoginServices } from '../login.service';
 import { LoginParams } from './ilogin-params';
 import { LoginResultImpl } from './ilogon-result';
 import { DataService } from '../app.service';
+import {NgxPermissionsService} from 'ngx-permissions';
+import { UserDataImpl } from '../sign-up-complete/iuser-data';
 @Component({
   selector: 'app-login-popup',
   templateUrl: './login-popup-material.component.html',
@@ -18,7 +20,7 @@ export class LoginPopupComponent implements OnInit, OnDestroy {
   loginParams:LoginParams;
   loginForm : FormGroup;
   constructor(public dialog: MatDialog, fb: FormBuilder, public loginService: LoginServices, public router:Router
-    ,public appService: DataService) {
+    ,public appService: DataService, private ngxService:NgxPermissionsService) {
     this.loginForm = fb.group({
       // We can set default values by passing in the corresponding value or leave blank if we wish to not set the value. For our example, we’ll default the gender to female.
       'email' : [null, Validators.compose([Validators.required, Validators.email])],
@@ -28,6 +30,7 @@ export class LoginPopupComponent implements OnInit, OnDestroy {
    }
 
   submitForm(value: any):void{
+    this.loginStatus=false;
     console.log('Reactive Form Data: ')
     console.log(value);
     this.loginParams=new LoginParams(value.email, value.password);
@@ -45,7 +48,10 @@ export class LoginPopupComponent implements OnInit, OnDestroy {
    this.loginService.login(params).then(res=>{
     this.loginResult=<LoginResultImpl>JSON.parse(JSON.stringify(res));
     console.log("Login result : "+this.loginResult.result);
+    let userData=JSON.parse(JSON.stringify(this.loginResult.data[0]));
+    console.log("Login data: "+userData[0].role);
     if(this.loginResult.result=="success"){
+      this.ngxService.loadPermissions([userData[0].role]);
       this.appService.changeNavControl(false);
       this.dialog.closeAll();
       this.router.navigateByUrl('/console-home');

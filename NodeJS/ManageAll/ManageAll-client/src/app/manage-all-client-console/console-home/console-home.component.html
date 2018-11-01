@@ -1,3 +1,14 @@
-<p>
-  console-home works!
+<p *ngxPermissionsOnly="['CEO']">
+  console-home working 
 </p>
+<ng-template
+     [ngxPermissionsOnly]="['CEO']" 
+     [ngxPermissionsOnlyThen]="thenBlock" 
+     [ngxPermissionsOnlyElse]="elseBlock">
+       </ng-template>
+      <ng-template #elseBlock>
+          <div>You are not authorized to view the contents.</div>
+      </ng-template>
+      <ng-template #thenBlock>
+          <div>Welcome CEO</div>
+      </ng-template>

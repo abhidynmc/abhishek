@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule, MatRadioModule, MatRadioButton
 ,MatSelectModule, MatCheckboxModule  } from "@angular/material";
+import {NgxPermissionsModule} from 'ngx-permissions';
 
 import { DataService } from './app.service';
 import { LoginServices } from './login.service';
@@ -54,13 +55,17 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     MatRadioModule,
     MatSelectModule,
     MatCheckboxModule,
-    ManageAllClientConsoleModule
+    ManageAllClientConsoleModule,
+    NgxPermissionsModule.forRoot()
     //RouterModule.forRoot(appRoutes, {useHash:true})
   ],
   entryComponents: [
     LoginPopupComponent,
     SignUpPopupComponent,
     PrivacyPolicyComponent
+  ],
+  exports:[
+    NgxPermissionsModule
   ],
   providers: [SignUpPopupComponent, DataService, LoginServices],
   bootstrap: [AppComponent]

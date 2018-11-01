@@ -14,7 +14,8 @@ router.put('/login', (req, res, next)=>{
         }
         else if(user.length>=1){
             // res.json({"result":"success","data":user});
-            res.status(200).json({"result":"success","data":user});
+            // logger.info("User Data : "+user);
+            res.status(200).json({"result":"success","data":[user]});
         }else{
             // res.json({"result":"loginFailure"}, {"data":null});
             res.status(200).json({"result":"loginFailure", "data":null});
