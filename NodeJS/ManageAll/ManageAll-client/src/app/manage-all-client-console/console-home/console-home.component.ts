@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService }  from '../../app.service';
+import { UserDataImpl } from '../../sign-up-complete/iuser-data';
 
 @Component({
   selector: 'app-console-home',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsoleHomeComponent implements OnInit {
 
-  constructor() { }
+  userData: UserDataImpl;
+  constructor(public appService : DataService) { 
+    this.appService.changeNavControl(false);
+    this.appService.currentLoginData.subscribe(data => this.userData=data);
+  }
 
   ngOnInit() {
   }

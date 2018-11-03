@@ -1,8 +1,10 @@
 import { Injectable} from '@angular/core';
 import { BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
-
+import { UserDataImpl } from './sign-up-complete/iuser-data';
 @Injectable()
 export class DataService{
+
+    constructor() {}
 
     private signUpFormData=new BehaviorSubject<any>(null);
     currentSignUpFormData=this.signUpFormData.asObservable();
@@ -16,9 +18,15 @@ export class DataService{
     private navControl=new BehaviorSubject<any>(null);
     currentNavControl=this.navControl.asObservable();
 
-    constructor() {}
 
     changeNavControl(data : boolean){
         this.navControl.next(data);
+    }
+
+    private loginData= new BehaviorSubject<any>(null);
+    currentLoginData=this.loginData.asObservable();
+
+    changeLoginData(data : any){
+        this.loginData.next(data);
     }
 }

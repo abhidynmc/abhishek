@@ -48,9 +48,10 @@ export class LoginPopupComponent implements OnInit, OnDestroy {
    this.loginService.login(params).then(res=>{
     this.loginResult=<LoginResultImpl>JSON.parse(JSON.stringify(res));
     console.log("Login result : "+this.loginResult.result);
-    let userData=JSON.parse(JSON.stringify(this.loginResult.data[0]));
-    console.log("Login data: "+userData[0].role);
     if(this.loginResult.result=="success"){
+      let userData=JSON.parse(JSON.stringify(this.loginResult.data[0]));
+    console.log("Login data: "+userData[0].role);
+      this.appService.changeLoginData(userData[0]);
       this.ngxService.loadPermissions([userData[0].role]);
       this.appService.changeNavControl(false);
       this.dialog.closeAll();
