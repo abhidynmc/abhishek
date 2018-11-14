@@ -4,7 +4,10 @@ import { ConsoleHomeComponent } from './console-home/console-home.component';
 import { consoleRouting } from './consoleHome.route';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule, MatRadioModule, MatRadioButton
+  ,MatSelectModule, MatCheckboxModule  } from "@angular/material";
+  import {MatMenuModule} from '@angular/material/menu';
+
 
 @NgModule({
   imports: [
@@ -12,7 +15,9 @@ import {MatMenuModule} from '@angular/material/menu';
     consoleRouting,
     NgxPermissionsModule, 
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [ConsoleHomeComponent]
 })

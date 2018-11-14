@@ -1,4 +1,4 @@
-<p *ngIf="userData!=null">
+<div *ngIf="userData!=null">
         <mat-toolbar color="grey">
                 <span>ManageAll Console</span>
               
@@ -9,11 +9,39 @@
                   <button mat-menu-item>Item 1</button>
                   <button mat-menu-item>Item 2</button>
                 </mat-menu>
+                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #appMenu="matMenu">
+                  <button mat-menu-item>Item 1</button>
+                  <button mat-menu-item>Item 2</button>
+                </mat-menu>
                 <span>
                        
                 </span>
               </mat-toolbar>
-</p>    
+</div>
+<mat-toolbar color="grey">
+  <span>ManageAll Console</span>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #appMenu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+  <span>
+         
+  </span>
+</mat-toolbar>
 <p *ngxPermissionsOnly="['CEO']">
   console-home working 
 </p>
