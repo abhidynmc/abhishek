@@ -26,26 +26,33 @@
 
   <!-- This fills the remaining space of the current row -->
   <span class="example-fill-remaining-space"></span>
-  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
+  <button mat-button routerLink="console-landing" routerLinkActive="active"><mat-icon>home</mat-icon>Home</button>
+  <button mat-button [matMenuTriggerFor]="dashboard"><mat-icon>dashboard</mat-icon>Dashboard <mat-icon>keyboard_arrow_down</mat-icon></button>
+  <mat-menu #dashboard="matMenu">
+    <button mat-menu-item routerLink="incident-dashboard" routerLinkActive="active">Incidents</button>
+    <button mat-menu-item routerLink="matrics-dashboard" routerLinkActive="active">Metrics</button>
   </mat-menu>
+  <button mat-button routerLink="incident-logging" routerLinkActive="active">	<mat-icon>create</mat-icon>Log Incident</button>
+  <button mat-button routerLink="incident-reporting" routerLinkActive="active" [matMenuTriggerFor]="reports"><mat-icon>description</mat-icon>Reports<mat-icon>keyboard_arrow_down</mat-icon></button>
+  <mat-menu #reports="matMenu">
+    <button mat-menu-item routerLink="employee-effort" routerLinkActive="active">Employee Effort</button>
+    <button mat-menu-item>Incidents</button>
+  </mat-menu>
+  
   <button mat-icon-button [matMenuTriggerFor]="appMenu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #appMenu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
+    <button mat-menu-item routerLink="user-setting" routerLinkActive="active"><mat-icon>settings</mat-icon>Settings</button>
+    <button mat-menu-item><mat-icon>eject</mat-icon>Log out</button>
   </mat-menu>
-  <span>
-         
-  </span>
+  
 </mat-toolbar>
+<router-outlet></router-outlet>
 <p *ngxPermissionsOnly="['CEO']">
   console-home working 
 </p>
-<ng-template
+      <ng-template
      [ngxPermissionsOnly]="['CEO']" 
      [ngxPermissionsOnlyThen]="thenBlock" 
      [ngxPermissionsOnlyElse]="elseBlock">
@@ -56,3 +63,5 @@
       <ng-template #thenBlock>
           <div>Welcome CEO</div>
       </ng-template>
+
+      

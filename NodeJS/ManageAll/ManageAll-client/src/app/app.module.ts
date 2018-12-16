@@ -35,11 +35,11 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     SignUpPopupComponent,
     SignUpCompleteComponent,
     TestComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule, 
+    FormsModule,  
     HttpModule,
     HttpClientModule,
     appRouting, 

@@ -17,6 +17,8 @@ export class ConsoleHomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appService.changeNavControl(false);
+    this.appService.currentLoginData.subscribe(data => this.userData=data);
   }
 
 }
