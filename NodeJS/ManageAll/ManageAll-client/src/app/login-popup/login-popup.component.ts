@@ -39,6 +39,7 @@ export class LoginPopupComponent implements OnInit, OnDestroy {
   
   openSignUp(){
     console.log("In LoginPopupComponent");
+    // this.dialog.closeAll();
     setTimeout(() => this.dialog.open(SignUpPopupComponent, { panelClass: 'custom-dialog-container' }).afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     }));
@@ -68,6 +69,6 @@ export class LoginPopupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.dialog.closeAll();
+    // this.dialog.closeAll();
   }
 }

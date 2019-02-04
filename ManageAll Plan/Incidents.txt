@@ -1,0 +1,19 @@
+id - auto
+incidentTicket
+teamid 
+createdby
+updatedby
+description
+applicationId - create an entity
+severityId -- create an entity
+configuableItem
+status -- create an entity
+reportingTime
+resolutionSummary
+rootCause -- create an entity
+resolutionTime
+
+incidents
+
+
+ 
