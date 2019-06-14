@@ -1,13 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule, MatRadioModule, MatRadioButton
-,MatSelectModule, MatCheckboxModule  } from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule, MatRadioButton } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { MatStepperModule } from "@angular/material/stepper";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import {NgxPermissionsModule} from 'ngx-permissions';
-
+import 'hammerjs';
 import { DataService } from './app.service';
 import { LoginServices } from './login.service';
 
@@ -35,12 +42,11 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     SignUpPopupComponent,
     SignUpCompleteComponent,
     TestComponent,
-    PrivacyPolicyComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,  
-    HttpModule,
     HttpClientModule,
     appRouting, 
     BrowserAnimationsModule,

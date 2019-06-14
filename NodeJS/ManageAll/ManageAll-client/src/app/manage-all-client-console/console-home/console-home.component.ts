@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButton, MatMenu} from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatMenu } from '@angular/material/menu';
 import { DataService }  from '../../app.service';
 import { UserDataImpl } from '../../sign-up-complete/iuser-data';
 

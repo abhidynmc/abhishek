@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SignUpPopupComponent } from '../sign-up-popup/sign-up-popup.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

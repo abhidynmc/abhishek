@@ -5,8 +5,16 @@ import { ConsoleHomeComponent } from './console-home/console-home.component';
 import { consoleRouting } from './consoleHome.route';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatTooltipModule, MatStepperModule, MatRadioModule, MatRadioButton
-  , MatSelectModule, MatCheckboxModule } from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule, MatRadioButton } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { MatStepperModule } from "@angular/material/stepper";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from '@angular/material/menu';
 import { ConsoleLandingComponent } from './console-landing/console-landing.component';
 import { IncidentDashboardComponent } from './incident-dashboard/incident-dashboard.component';

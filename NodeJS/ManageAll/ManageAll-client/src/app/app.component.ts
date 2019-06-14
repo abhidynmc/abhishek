@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {LoginPopupComponent} from './login-popup/login-popup.component';
 import { DataService } from './app.service';
 

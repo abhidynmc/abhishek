@@ -3,7 +3,7 @@ import { DataService } from '../app.service';
 import { IOrganizationData, OrganizationData } from './organization-data';
 import { IOrganizationDomains } from './iorganization-domains';
 import { IOrganizationRole } from './iorganization-role';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SignUpServices } from './sign-up-services.service';
 import { IPersonalForm } from '../sign-up-complete/ipersonal-form';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
